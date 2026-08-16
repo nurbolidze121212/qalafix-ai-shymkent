@@ -1,0 +1,262 @@
+{
+  "source": "TACO — Trash Annotations in Context",
+  "sourceRepository": "https://github.com/pedropro/TACO",
+  "paper": "https://arxiv.org/abs/2003.06975",
+  "importedAt": "2026-08-16T08:20:11.771Z",
+  "requested": 36,
+  "imported": 36,
+  "images": [
+    {
+      "filename": "taco-0097.jpg",
+      "tacoImageId": 97,
+      "sourceUrl": "https://farm66.staticflickr.com/65535/47066101104_0a84390b3e_z.jpg",
+      "originalFile": "batch_1/000124.JPG",
+      "annotatedRatio": 0.6256
+    },
+    {
+      "filename": "taco-0505.jpg",
+      "tacoImageId": 505,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2018/12/25/XSuz5WsJdzleEbQesC8OKc0LImtajwxzbNqEY7vz.jpeg",
+      "originalFile": "batch_14/000004.jpg",
+      "annotatedRatio": 0.5156
+    },
+    {
+      "filename": "taco-1239.jpg",
+      "tacoImageId": 1239,
+      "sourceUrl": "https://farm66.staticflickr.com/65535/32912184137_5fab6f7024_z.jpg",
+      "originalFile": "batch_7/000078.JPG",
+      "annotatedRatio": 0.4513
+    },
+    {
+      "filename": "taco-0460.jpg",
+      "tacoImageId": 460,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2019/08/10/SxvEOG2kH1srKAJDUCgaU1ml5TxChG1fN8vXKyJ9.jpeg",
+      "originalFile": "batch_13/000059.jpg",
+      "annotatedRatio": 0.3986
+    },
+    {
+      "filename": "taco-0838.jpg",
+      "tacoImageId": 838,
+      "sourceUrl": "https://farm66.staticflickr.com/65535/47066361194_9532f1dbee_z.jpg",
+      "originalFile": "batch_3/IMG_4913.JPG",
+      "annotatedRatio": 0.3738
+    },
+    {
+      "filename": "taco-0447.jpg",
+      "tacoImageId": 447,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2019/04/16/xR35RrvE8xIcO8ligxAZYyFYwc61YwtWNmILTikP.jpeg",
+      "originalFile": "batch_13/000046.jpg",
+      "annotatedRatio": 0.333
+    },
+    {
+      "filename": "taco-0067.jpg",
+      "tacoImageId": 67,
+      "sourceUrl": "https://farm66.staticflickr.com/65535/47855527831_2048361a88_z.jpg",
+      "originalFile": "batch_1/000088.JPG",
+      "annotatedRatio": 0.305
+    },
+    {
+      "filename": "taco-0014.jpg",
+      "tacoImageId": 14,
+      "sourceUrl": "https://farm66.staticflickr.com/65535/47803337932_f6a005f4c1_z.jpg",
+      "originalFile": "batch_1/000056.jpg",
+      "annotatedRatio": 0.2902
+    },
+    {
+      "filename": "taco-0819.jpg",
+      "tacoImageId": 819,
+      "sourceUrl": "https://farm66.staticflickr.com/65535/32911670987_5171f72e9a_z.jpg",
+      "originalFile": "batch_3/IMG_4869.JPG",
+      "annotatedRatio": 0.2731
+    },
+    {
+      "filename": "taco-0493.jpg",
+      "tacoImageId": 493,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2018/10/06/Kzj1YLhfJSJ3zA9gcIaowfQoqtseC9k4lSHJy7Ol.jpeg",
+      "originalFile": "batch_13/000092.jpg",
+      "annotatedRatio": 0.2455
+    },
+    {
+      "filename": "taco-0223.jpg",
+      "tacoImageId": 223,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/1048/tihZflr2KFQ13YENqImY9fhjXuTnQeSp1eAN8DSs.jpeg",
+      "originalFile": "batch_11/000022.jpg",
+      "annotatedRatio": 0.2278
+    },
+    {
+      "filename": "taco-1199.jpg",
+      "tacoImageId": 1199,
+      "sourceUrl": "https://farm66.staticflickr.com/65535/40889665973_65f9ccb919_z.jpg",
+      "originalFile": "batch_7/000031.JPG",
+      "annotatedRatio": 0.2193
+    },
+    {
+      "filename": "taco-0374.jpg",
+      "tacoImageId": 374,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2019/07/13/r9KhHeUiY820h5KMGGUxCffu5UUtylQx8H7Tjo1r.jpeg",
+      "originalFile": "batch_12/000073.jpg",
+      "annotatedRatio": 0.2078
+    },
+    {
+      "filename": "taco-0517.jpg",
+      "tacoImageId": 517,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2018/09/24/Zi2hljTvM1oIqzMeHy41GLoZPX30EgIzPl6ZlJ0S.jpeg",
+      "originalFile": "batch_14/000016.jpg",
+      "annotatedRatio": 0.1999
+    },
+    {
+      "filename": "taco-0436.jpg",
+      "tacoImageId": 436,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2019/05/05/RLEYkIkZviQmJgnVeipDemAyFRJi5ctLDtGdjk15.jpeg",
+      "originalFile": "batch_13/000035.jpg",
+      "annotatedRatio": 0.1876
+    },
+    {
+      "filename": "taco-1154.jpg",
+      "tacoImageId": 1154,
+      "sourceUrl": "https://farm66.staticflickr.com/65535/47066800644_9f7031f16d_z.jpg",
+      "originalFile": "batch_6/000022.JPG",
+      "annotatedRatio": 0.1785
+    },
+    {
+      "filename": "taco-0397.jpg",
+      "tacoImageId": 397,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2019/05/21/sDup0ZtDT6PDPNHhAelQhtuDzKJol0QtTnBqOEvZ.jpeg",
+      "originalFile": "batch_12/000096.jpg",
+      "annotatedRatio": 0.1731
+    },
+    {
+      "filename": "taco-0383.jpg",
+      "tacoImageId": 383,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2019/07/13/52VuSAsOMDEoaqXg7XmL0DvMd5e9LQvFNPadIGIY.jpeg",
+      "originalFile": "batch_12/000082.jpg",
+      "annotatedRatio": 0.1661
+    },
+    {
+      "filename": "taco-0309.jpg",
+      "tacoImageId": 309,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2018/08/08/jC7mIEj0Q1TEXNHCXJahUqhIEqPjGwBpTmN5BsRK.jpeg",
+      "originalFile": "batch_12/000008.jpg",
+      "annotatedRatio": 0.1589
+    },
+    {
+      "filename": "taco-0211.jpg",
+      "tacoImageId": 211,
+      "sourceUrl": "https://farm66.staticflickr.com/65535/48693696308_0ef0c4e66f_z.jpg",
+      "originalFile": "batch_11/000010.jpg",
+      "annotatedRatio": 0.1494
+    },
+    {
+      "filename": "taco-0075.jpg",
+      "tacoImageId": 75,
+      "sourceUrl": "https://farm66.staticflickr.com/65535/40888909583_82a44ac1fc_z.jpg",
+      "originalFile": "batch_1/000062.JPG",
+      "annotatedRatio": 0.146
+    },
+    {
+      "filename": "taco-0384.jpg",
+      "tacoImageId": 384,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2019/07/13/FxNDpkg7fxjNiqLziC9jKm8cPe9k6jxKAouCrGOY.jpeg",
+      "originalFile": "batch_12/000083.jpg",
+      "annotatedRatio": 0.1387
+    },
+    {
+      "filename": "taco-0502.jpg",
+      "tacoImageId": 502,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2018/11/03/NEpK7xmKhVP0P5O5DuQariSO9lyCTTScis6MoABH.jpeg",
+      "originalFile": "batch_14/000001.jpg",
+      "annotatedRatio": 0.1344
+    },
+    {
+      "filename": "taco-0044.jpg",
+      "tacoImageId": 44,
+      "sourceUrl": "https://farm66.staticflickr.com/65535/32911404467_6bb8e83d98_z.jpg",
+      "originalFile": "batch_1/000037.jpg",
+      "annotatedRatio": 0.1301
+    },
+    {
+      "filename": "taco-1408.jpg",
+      "tacoImageId": 1408,
+      "sourceUrl": "https://farm66.staticflickr.com/65535/48631087802_40fe746058_z.jpg",
+      "originalFile": "batch_9/000008.jpg",
+      "annotatedRatio": 0.1236
+    },
+    {
+      "filename": "taco-0265.jpg",
+      "tacoImageId": 265,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2019/04/18/eQE5CFBZy6CYHcvS1jXHnZi1BEq7eREy61La0SV1.jpeg",
+      "originalFile": "batch_11/000064.jpg",
+      "annotatedRatio": 0.1206
+    },
+    {
+      "filename": "taco-1159.jpg",
+      "tacoImageId": 1159,
+      "sourceUrl": "https://farm66.staticflickr.com/65535/46939990835_9d8849c80f_z.jpg",
+      "originalFile": "batch_6/000017.JPG",
+      "annotatedRatio": 0.1152
+    },
+    {
+      "filename": "taco-0434.jpg",
+      "tacoImageId": 434,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2019/05/05/nqlBUV7fdsGybsvxzAXb8CtiXkQ6gDuKPA5NRblS.jpeg",
+      "originalFile": "batch_13/000033.jpg",
+      "annotatedRatio": 0.111
+    },
+    {
+      "filename": "taco-0354.jpg",
+      "tacoImageId": 354,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2018/08/28/zGSwGdiiq3gIybROf1HU71pBu6ry2VftipIDjzlO.jpeg",
+      "originalFile": "batch_12/000053.jpg",
+      "annotatedRatio": 0.1061
+    },
+    {
+      "filename": "taco-0472.jpg",
+      "tacoImageId": 472,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2018/09/07/NCVLkVkn08Q3bM3sEKEOiUJ8jvbGag1KxuPg3UFp.jpeg",
+      "originalFile": "batch_13/000071.jpg",
+      "annotatedRatio": 0.1
+    },
+    {
+      "filename": "taco-0485.jpg",
+      "tacoImageId": 485,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2018/09/20/DQh5UuERJCinb5TdqHNZJHuzIYxTITYmSoAjUMeC.jpeg",
+      "originalFile": "batch_13/000084.jpg",
+      "annotatedRatio": 0.0988
+    },
+    {
+      "filename": "taco-0394.jpg",
+      "tacoImageId": 394,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2019/07/13/KEH02hdjJnGRgBkM12GkUwgDr4QE1m29hLAL178V.jpeg",
+      "originalFile": "batch_12/000093.jpg",
+      "annotatedRatio": 0.0946
+    },
+    {
+      "filename": "taco-0685.jpg",
+      "tacoImageId": 685,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2018/09/08/5cFkc7QtoCLrBvfMwwsY5VHbjZBJVic9zk2qlj7W.jpeg",
+      "originalFile": "batch_15/000084.jpg",
+      "annotatedRatio": 0.0898
+    },
+    {
+      "filename": "taco-0651.jpg",
+      "tacoImageId": 651,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2018/10/30/nbuKLysZAnbRsXrehCklCbbryXVsb2TFhfoSzV2e.jpeg",
+      "originalFile": "batch_15/000050.jpg",
+      "annotatedRatio": 0.0861
+    },
+    {
+      "filename": "taco-0504.jpg",
+      "tacoImageId": 504,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2018/10/27/FAtjEQkwYQMWbZlV6sJCxHVEo4r2CYq6vcnukhSW.jpeg",
+      "originalFile": "batch_14/000003.jpg",
+      "annotatedRatio": 0.0843
+    },
+    {
+      "filename": "taco-0653.jpg",
+      "tacoImageId": 653,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2018/10/30/cwDglpBItKAYeo3sa4JZwvUA2UCcdCuKYEeFRlqM.jpeg",
+      "originalFile": "batch_15/000052.jpg",
+      "annotatedRatio": 0.0803
+    }
+  ]
+}

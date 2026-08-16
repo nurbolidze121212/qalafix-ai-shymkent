@@ -1,0 +1,36 @@
+{
+  "version": 2,
+  "license": "project-owned synthetic images generated for QalaFix AI",
+  "privacy": "prompts exclude people, faces, readable number plates, brands and watermarks",
+  "split": {
+    "training": {
+      "count": 140,
+      "percent": 70
+    },
+    "validation": {
+      "count": 30,
+      "percent": 15
+    },
+    "finalTest": {
+      "count": 30,
+      "percent": 15
+    }
+  },
+  "trainingClasses": {
+    "trash": 60,
+    "manhole": 16,
+    "pothole": 16,
+    "water_leak": 16,
+    "broken_bench": 16,
+    "other": 16
+  },
+  "finalTestGroups": {
+    "overflowing_container": 5,
+    "garbage_bags": 5,
+    "waste_pile": 5,
+    "scattered_litter": 5,
+    "difficult_positive": 5,
+    "clean_scene": 5
+  },
+  "externalDatasetPolicy": "Metadata and licenses were audited; no third-party photos are included in the production model."
+}

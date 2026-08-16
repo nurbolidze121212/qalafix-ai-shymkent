@@ -1,0 +1,1187 @@
+{
+  "version": 2,
+  "split": {
+    "training": 176,
+    "validation": 30,
+    "finalTest": 30,
+    "baseRatio": "70/15/15",
+    "externalTrainingOnly": 36
+  },
+  "correct": 29,
+  "total": 30,
+  "trashRecall": 0.96,
+  "cleanSpecificity": 1,
+  "trashSubtypeAccuracy": 0.76,
+  "validationAccuracy": 1,
+  "benchmarkGroups": {
+    "overflowing_container": {
+      "correct": 5,
+      "total": 5
+    },
+    "garbage_bags": {
+      "correct": 5,
+      "total": 5
+    },
+    "waste_pile": {
+      "correct": 5,
+      "total": 5
+    },
+    "scattered_litter": {
+      "correct": 5,
+      "total": 5
+    },
+    "difficult_positive": {
+      "correct": 4,
+      "total": 5
+    },
+    "clean_scene": {
+      "correct": 5,
+      "total": 5
+    }
+  },
+  "categoryRegression": {
+    "correct": 4,
+    "total": 4,
+    "results": [
+      {
+        "file": "public/demo/manhole.webp",
+        "expected": "manhole",
+        "predicted": "manhole",
+        "correct": true,
+        "scores": [
+          {
+            "label": "manhole",
+            "score": 0.7222497951000003
+          },
+          {
+            "label": "pothole",
+            "score": 0.5049947656666669
+          },
+          {
+            "label": "trash",
+            "score": 0.46781481010000014
+          },
+          {
+            "label": "water_leak",
+            "score": 0.4350476281333335
+          },
+          {
+            "label": "other",
+            "score": 0.3777069084666666
+          },
+          {
+            "label": "broken_bench",
+            "score": 0.37012569243333343
+          }
+        ]
+      },
+      {
+        "file": "public/demo/pothole.webp",
+        "expected": "pothole",
+        "predicted": "pothole",
+        "correct": true,
+        "scores": [
+          {
+            "label": "pothole",
+            "score": 0.7019727384666669
+          },
+          {
+            "label": "water_leak",
+            "score": 0.5467813741666666
+          },
+          {
+            "label": "manhole",
+            "score": 0.5391323977333331
+          },
+          {
+            "label": "trash",
+            "score": 0.48618758083333313
+          },
+          {
+            "label": "broken_bench",
+            "score": 0.4615677555666666
+          },
+          {
+            "label": "other",
+            "score": 0.4232048911666666
+          }
+        ]
+      },
+      {
+        "file": "public/demo/water_leak.webp",
+        "expected": "water_leak",
+        "predicted": "water_leak",
+        "correct": true,
+        "scores": [
+          {
+            "label": "water_leak",
+            "score": 0.6518159546666668
+          },
+          {
+            "label": "broken_bench",
+            "score": 0.5623367781333336
+          },
+          {
+            "label": "trash",
+            "score": 0.5386223869000003
+          },
+          {
+            "label": "pothole",
+            "score": 0.5196010038333337
+          },
+          {
+            "label": "manhole",
+            "score": 0.46419757283333335
+          },
+          {
+            "label": "other",
+            "score": 0.4286317774666666
+          }
+        ]
+      },
+      {
+        "file": "public/demo/broken_bench.webp",
+        "expected": "broken_bench",
+        "predicted": "broken_bench",
+        "correct": true,
+        "scores": [
+          {
+            "label": "broken_bench",
+            "score": 0.7258343315666665
+          },
+          {
+            "label": "other",
+            "score": 0.5285483392000002
+          },
+          {
+            "label": "trash",
+            "score": 0.44836324383333337
+          },
+          {
+            "label": "manhole",
+            "score": 0.44456524176666673
+          },
+          {
+            "label": "water_leak",
+            "score": 0.42182870529999983
+          },
+          {
+            "label": "pothole",
+            "score": 0.4077386988333334
+          }
+        ]
+      }
+    ]
+  },
+  "results": [
+    {
+      "file": "data/ai-v2/final-test/trash/blind-02.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "garbage_bags",
+      "predictedSubtype": "garbage_bags",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.6762476342999998
+        },
+        {
+          "label": "pothole",
+          "score": 0.39368973083333286
+        },
+        {
+          "label": "water_leak",
+          "score": 0.3833638461999998
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.3682488438000002
+        },
+        {
+          "label": "manhole",
+          "score": 0.3542788293666665
+        },
+        {
+          "label": "other",
+          "score": 0.30656124776666677
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind-03.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "overflowing_bin",
+      "predictedSubtype": "overflowing_bin",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.6755979548000002
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.4320644261333331
+        },
+        {
+          "label": "water_leak",
+          "score": 0.4199568949333332
+        },
+        {
+          "label": "pothole",
+          "score": 0.38414937909999997
+        },
+        {
+          "label": "other",
+          "score": 0.3785458880666665
+        },
+        {
+          "label": "manhole",
+          "score": 0.37156528623333335
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind-05.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "illegal_dump",
+      "predictedSubtype": "illegal_dump",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.7015946924999995
+        },
+        {
+          "label": "pothole",
+          "score": 0.5686862309999999
+        },
+        {
+          "label": "water_leak",
+          "score": 0.5263034312666669
+        },
+        {
+          "label": "other",
+          "score": 0.48842425763333347
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.45216880340000004
+        },
+        {
+          "label": "manhole",
+          "score": 0.4489603801666667
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind-07.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "overflowing_bin",
+      "predictedSubtype": "overflowing_bin",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.7100450466333333
+        },
+        {
+          "label": "other",
+          "score": 0.4384071981999999
+        },
+        {
+          "label": "water_leak",
+          "score": 0.4328236032666666
+        },
+        {
+          "label": "manhole",
+          "score": 0.4094354477999999
+        },
+        {
+          "label": "pothole",
+          "score": 0.4076871113000002
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.39514099266666675
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind-09.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "illegal_dump",
+      "predictedSubtype": "illegal_dump",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.6995058116333331
+        },
+        {
+          "label": "pothole",
+          "score": 0.5349340495333332
+        },
+        {
+          "label": "water_leak",
+          "score": 0.45837304056666667
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.3666078404333331
+        },
+        {
+          "label": "manhole",
+          "score": 0.35542558323333323
+        },
+        {
+          "label": "other",
+          "score": 0.3132591060999998
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind-11.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "garbage_bags",
+      "predictedSubtype": "garbage_bags",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.682985325166667
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.5241397561333334
+        },
+        {
+          "label": "water_leak",
+          "score": 0.5161836946999997
+        },
+        {
+          "label": "pothole",
+          "score": 0.4984761408333333
+        },
+        {
+          "label": "manhole",
+          "score": 0.4878672367333332
+        },
+        {
+          "label": "other",
+          "score": 0.4617042359333334
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind-13.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "scattered_litter",
+      "predictedSubtype": "scattered_litter",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.6978253982333341
+        },
+        {
+          "label": "pothole",
+          "score": 0.6193021881999999
+        },
+        {
+          "label": "water_leak",
+          "score": 0.5482770732000002
+        },
+        {
+          "label": "manhole",
+          "score": 0.4872907479999998
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.45220203373333323
+        },
+        {
+          "label": "other",
+          "score": 0.4476281221
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind2-01.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "overflowing_bin",
+      "predictedSubtype": "overflowing_bin",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.7877328180333337
+        },
+        {
+          "label": "pothole",
+          "score": 0.4604601450333332
+        },
+        {
+          "label": "water_leak",
+          "score": 0.4404991765000001
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.4095869464000002
+        },
+        {
+          "label": "other",
+          "score": 0.40756432163333334
+        },
+        {
+          "label": "manhole",
+          "score": 0.39209373683333343
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind2-02.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "overflowing_bin",
+      "predictedSubtype": "overflowing_bin",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.6985714779999999
+        },
+        {
+          "label": "pothole",
+          "score": 0.46679040193333315
+        },
+        {
+          "label": "water_leak",
+          "score": 0.4092137945333332
+        },
+        {
+          "label": "other",
+          "score": 0.3926455427666667
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.38764919313333307
+        },
+        {
+          "label": "manhole",
+          "score": 0.36996705963333304
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind2-03.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "overflowing_bin",
+      "predictedSubtype": "overflowing_bin",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.7665259655
+        },
+        {
+          "label": "water_leak",
+          "score": 0.46483445280000035
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.4613342345000002
+        },
+        {
+          "label": "pothole",
+          "score": 0.4610511821666668
+        },
+        {
+          "label": "manhole",
+          "score": 0.4520480323000002
+        },
+        {
+          "label": "other",
+          "score": 0.40930362986666685
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind2-05.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "garbage_bags",
+      "predictedSubtype": "garbage_bags",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.6134864256999997
+        },
+        {
+          "label": "pothole",
+          "score": 0.4812056698666667
+        },
+        {
+          "label": "other",
+          "score": 0.4454135388333334
+        },
+        {
+          "label": "water_leak",
+          "score": 0.44293985473333386
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.4261728709000001
+        },
+        {
+          "label": "manhole",
+          "score": 0.3852286487333331
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind2-06.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "garbage_bags",
+      "predictedSubtype": "garbage_bags",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.7329818875000012
+        },
+        {
+          "label": "pothole",
+          "score": 0.48481428686666667
+        },
+        {
+          "label": "water_leak",
+          "score": 0.4567456859666667
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.4533508460333333
+        },
+        {
+          "label": "other",
+          "score": 0.3675819254333334
+        },
+        {
+          "label": "manhole",
+          "score": 0.3563425057333331
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind2-07.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "garbage_bags",
+      "predictedSubtype": "garbage_bags",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.695129445966666
+        },
+        {
+          "label": "pothole",
+          "score": 0.5342657889666669
+        },
+        {
+          "label": "water_leak",
+          "score": 0.48638397980000003
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.4398517697
+        },
+        {
+          "label": "manhole",
+          "score": 0.41663370243333336
+        },
+        {
+          "label": "other",
+          "score": 0.38440226429999996
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind2-09.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "waste_pile",
+      "predictedSubtype": "illegal_dump",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.7321048496666669
+        },
+        {
+          "label": "water_leak",
+          "score": 0.5425399048000002
+        },
+        {
+          "label": "pothole",
+          "score": 0.5252388822666667
+        },
+        {
+          "label": "other",
+          "score": 0.5244931050666669
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.42894497206666665
+        },
+        {
+          "label": "manhole",
+          "score": 0.4285467502666666
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind2-10.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "waste_pile",
+      "predictedSubtype": "illegal_dump",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.7416281456333335
+        },
+        {
+          "label": "pothole",
+          "score": 0.5774383172999996
+        },
+        {
+          "label": "water_leak",
+          "score": 0.5095908358666666
+        },
+        {
+          "label": "other",
+          "score": 0.4085922250666671
+        },
+        {
+          "label": "manhole",
+          "score": 0.38064659243333354
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.37002266729999983
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind2-11.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "illegal_dump",
+      "predictedSubtype": "illegal_dump",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.6453240641333332
+        },
+        {
+          "label": "water_leak",
+          "score": 0.5696347542666668
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.5518325350333335
+        },
+        {
+          "label": "other",
+          "score": 0.5486280638999997
+        },
+        {
+          "label": "pothole",
+          "score": 0.4973231226666668
+        },
+        {
+          "label": "manhole",
+          "score": 0.4445102399000001
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind3-04.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "scattered_litter",
+      "predictedSubtype": "scattered_litter",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.7112156677666661
+        },
+        {
+          "label": "pothole",
+          "score": 0.5335620521666665
+        },
+        {
+          "label": "water_leak",
+          "score": 0.44755174726666686
+        },
+        {
+          "label": "manhole",
+          "score": 0.44307288773333325
+        },
+        {
+          "label": "other",
+          "score": 0.44239957039999983
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.39807911589999984
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind3-05.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "scattered_litter",
+      "predictedSubtype": "scattered_litter",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.7001555933000002
+        },
+        {
+          "label": "pothole",
+          "score": 0.5444742951333331
+        },
+        {
+          "label": "water_leak",
+          "score": 0.5105879869666666
+        },
+        {
+          "label": "other",
+          "score": 0.44887673819999985
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.43990921440000036
+        },
+        {
+          "label": "manhole",
+          "score": 0.4095383632333331
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind3-06.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "scattered_litter",
+      "predictedSubtype": "scattered_litter",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.6738408775666662
+        },
+        {
+          "label": "pothole",
+          "score": 0.549172604066667
+        },
+        {
+          "label": "water_leak",
+          "score": 0.5165055237333336
+        },
+        {
+          "label": "other",
+          "score": 0.4347964475666665
+        },
+        {
+          "label": "manhole",
+          "score": 0.4291284461666665
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.4034803239666665
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind3-07.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "scattered_litter",
+      "predictedSubtype": "illegal_dump",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.7515166169333335
+        },
+        {
+          "label": "pothole",
+          "score": 0.5419577235666667
+        },
+        {
+          "label": "water_leak",
+          "score": 0.46352921896666666
+        },
+        {
+          "label": "other",
+          "score": 0.41925555116666663
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.41356650339999995
+        },
+        {
+          "label": "manhole",
+          "score": 0.4089172755666666
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind3-09.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "single_litter",
+      "predictedSubtype": "scattered_litter",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.6270270519666664
+        },
+        {
+          "label": "pothole",
+          "score": 0.5063126458333332
+        },
+        {
+          "label": "water_leak",
+          "score": 0.44458114986666697
+        },
+        {
+          "label": "other",
+          "score": 0.41062940676666687
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.40277564153333345
+        },
+        {
+          "label": "manhole",
+          "score": 0.37700445583333325
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind3-10.webp",
+      "expected": "trash",
+      "predicted": "pothole",
+      "correct": false,
+      "expectedSubtype": "scattered_litter",
+      "scores": [
+        {
+          "label": "pothole",
+          "score": 0.5528033899333332
+        },
+        {
+          "label": "trash",
+          "score": 0.5240011545
+        },
+        {
+          "label": "water_leak",
+          "score": 0.5149573388333338
+        },
+        {
+          "label": "other",
+          "score": 0.4395803746666667
+        },
+        {
+          "label": "manhole",
+          "score": 0.43743160310000007
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.42934094966666675
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind3-11.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "scattered_litter",
+      "predictedSubtype": "scattered_litter",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.6144390994999994
+        },
+        {
+          "label": "water_leak",
+          "score": 0.5838234691666667
+        },
+        {
+          "label": "pothole",
+          "score": 0.5550795275999993
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.4905172262
+        },
+        {
+          "label": "other",
+          "score": 0.4868300505666669
+        },
+        {
+          "label": "manhole",
+          "score": 0.46568980310000013
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind3-12.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "scattered_litter",
+      "predictedSubtype": "scattered_litter",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.6525784751333333
+        },
+        {
+          "label": "pothole",
+          "score": 0.5671499285333331
+        },
+        {
+          "label": "water_leak",
+          "score": 0.4874825997666669
+        },
+        {
+          "label": "manhole",
+          "score": 0.4055542661999998
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.3722054695333332
+        },
+        {
+          "label": "other",
+          "score": 0.32553214766666655
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/trash/blind3-13.webp",
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "expectedSubtype": "single_litter",
+      "predictedSubtype": "scattered_litter",
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.5634714521666662
+        },
+        {
+          "label": "pothole",
+          "score": 0.5243478731333334
+        },
+        {
+          "label": "water_leak",
+          "score": 0.42803218106666674
+        },
+        {
+          "label": "other",
+          "score": 0.4109619072666666
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.37876949919999997
+        },
+        {
+          "label": "manhole",
+          "score": 0.3630113475000001
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/clean_scene/blind-04.webp",
+      "expected": "other",
+      "predicted": "other",
+      "correct": true,
+      "scores": [
+        {
+          "label": "other",
+          "score": 0.7555778692333335
+        },
+        {
+          "label": "water_leak",
+          "score": 0.5028396044999999
+        },
+        {
+          "label": "trash",
+          "score": 0.4774025154333333
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.46095047113333326
+        },
+        {
+          "label": "pothole",
+          "score": 0.4367643798333333
+        },
+        {
+          "label": "manhole",
+          "score": 0.43270602646666684
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/clean_scene/blind-08.webp",
+      "expected": "other",
+      "predicted": "other",
+      "correct": true,
+      "scores": [
+        {
+          "label": "other",
+          "score": 0.6930883827666663
+        },
+        {
+          "label": "pothole",
+          "score": 0.5581577385000002
+        },
+        {
+          "label": "trash",
+          "score": 0.5169731082333332
+        },
+        {
+          "label": "water_leak",
+          "score": 0.4953906351333337
+        },
+        {
+          "label": "manhole",
+          "score": 0.48181725960000005
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.3792056004666668
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/clean_scene/blind-12.webp",
+      "expected": "other",
+      "predicted": "other",
+      "correct": true,
+      "scores": [
+        {
+          "label": "other",
+          "score": 0.5506404526000005
+        },
+        {
+          "label": "water_leak",
+          "score": 0.5371287485333333
+        },
+        {
+          "label": "pothole",
+          "score": 0.5370172643999999
+        },
+        {
+          "label": "manhole",
+          "score": 0.5127155812999997
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.48515087526666695
+        },
+        {
+          "label": "trash",
+          "score": 0.47987143180000014
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/clean_scene/blind2-15.webp",
+      "expected": "other",
+      "predicted": "other",
+      "correct": true,
+      "scores": [
+        {
+          "label": "other",
+          "score": 0.7409973571333329
+        },
+        {
+          "label": "pothole",
+          "score": 0.45043862670000007
+        },
+        {
+          "label": "trash",
+          "score": 0.4488274844666664
+        },
+        {
+          "label": "water_leak",
+          "score": 0.4193854889333331
+        },
+        {
+          "label": "manhole",
+          "score": 0.41424934436666644
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.3793458788333332
+        }
+      ]
+    },
+    {
+      "file": "data/ai-v2/final-test/clean_scene/blind2-16.webp",
+      "expected": "other",
+      "predicted": "other",
+      "correct": true,
+      "scores": [
+        {
+          "label": "other",
+          "score": 0.7117317726666664
+        },
+        {
+          "label": "pothole",
+          "score": 0.5140143289666667
+        },
+        {
+          "label": "manhole",
+          "score": 0.5059087078666665
+        },
+        {
+          "label": "trash",
+          "score": 0.4800062892333332
+        },
+        {
+          "label": "water_leak",
+          "score": 0.47495738426666695
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.4069885682
+        }
+      ]
+    }
+  ]
+}
