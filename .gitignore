@@ -14,3 +14,10 @@ data/ai-v2/validation/
 data/ai-v2/final-test/
 tmp/
 *.tgz
+.build_qalafix_presentation/
+QalaFix_AI_Shymkent_2026/
+QalaFix_AI_Shymkent_2026.pptx
+QalaFix_AI_Shymkent_2026.pptx.inspect.ndjson
+QalaFix_AI_10_slides.zip
+QalaFix_AI_preview.png
+QalaFix_AI_slides/

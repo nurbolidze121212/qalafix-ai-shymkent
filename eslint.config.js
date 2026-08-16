@@ -4,7 +4,7 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
-  { ignores: ['dist', 'node_modules', 'coverage', 'android', '.wrangler'] },
+  { ignores: ['dist', 'node_modules', 'coverage', 'android', '.wrangler', '.build_qalafix_presentation', 'QalaFix_AI_Shymkent_2026', 'QalaFix_AI_slides'] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
