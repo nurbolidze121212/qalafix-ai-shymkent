@@ -10,12 +10,12 @@ if (-not $env:ANDROID_HOME) {
 }
 $env:ANDROID_SDK_ROOT = $env:ANDROID_HOME
 
-$javaVersion = & $javaCommand.Source -version 2>&1 | Select-Object -First 1
-if ($javaVersion -notmatch 'version "21') {
-  throw "Для Capacitor 8 требуется JDK 21. Сейчас используется: $javaVersion"
+$javaVersion = & $javaCommand.Source --version | Select-Object -First 1
+if ($javaVersion -notmatch '\b21\.') {
+  throw "Capacitor 8 requires JDK 21. Current runtime: $javaVersion"
 }
 if (-not (Test-Path -LiteralPath $env:ANDROID_HOME)) {
-  throw "Android SDK не найден: $env:ANDROID_HOME"
+  throw "Android SDK not found: $env:ANDROID_HOME"
 }
 
 npm run android:sync
