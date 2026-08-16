@@ -1,14 +1,15 @@
 import { useEffect, useMemo, useState } from 'react'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
+import { CircleMarker, MapContainer, Marker, Popup, TileLayer, Tooltip, useMap } from 'react-leaflet'
 import { loadReports } from '../utils/storage'
 import { type CityReport } from '../types/report'
 import { severityLabel, severityColor, statusLabel, formatDate } from '../utils/formatters'
 import { ErrorBoundary } from '../components/ui/ErrorBoundary'
 import { useDocumentTitle } from '../utils/useDocumentTitle'
 import PageHeader from '../components/layout/PageHeader'
-import { Filter, LocateFixed, MapPin } from 'lucide-react'
+import { Filter, LoaderCircle, LocateFixed, MapPin } from 'lucide-react'
+import { formatLocationAccuracy, getLocationErrorMessage, requestCurrentLocation, type LocationPoint } from '../utils/geolocation'
 
 const center = { lat: 42.316, lng: 69.605 }
 
@@ -30,6 +31,14 @@ function FixMapView() {
   return null
 }
 
+function ShowCurrentLocation({ point }: { point: LocationPoint }) {
+  const map = useMap()
+  useEffect(() => {
+    map.flyTo([point.latitude, point.longitude], 16, { animate: true, duration: 0.7 })
+  }, [map, point])
+  return null
+}
+
 function severityIcon(severity: CityReport['severity'], category: string) {
   const isTrash = category === 'Мусор'
   const color = isTrash ? '#059669' : severity === 'critical' || severity === 'high' ? '#dc2626' : severity === 'medium' ? '#f59e0b' : '#10b981'
@@ -46,6 +55,26 @@ export default function MapPage() {
   useDocumentTitle('QalaFix AI — Карта')
   const [reports] = useState<CityReport[]>(() => loadReports())
   const [filter, setFilter] = useState('trash')
+  const [userLocation, setUserLocation] = useState<LocationPoint | null>(null)
+  const [locating, setLocating] = useState(false)
+  const [locationMessage, setLocationMessage] = useState('')
+  const [locationFailed, setLocationFailed] = useState(false)
+
+  async function locateUser() {
+    setLocating(true)
+    setLocationMessage('')
+    setLocationFailed(false)
+    try {
+      const point = await requestCurrentLocation()
+      setUserLocation(point)
+      setLocationMessage(formatLocationAccuracy(point.accuracy))
+    } catch (locationError) {
+      setLocationFailed(true)
+      setLocationMessage(getLocationErrorMessage(locationError))
+    } finally {
+      setLocating(false)
+    }
+  }
 
   const filtered = useMemo(() => {
     if (filter === 'all') return reports
@@ -58,7 +87,7 @@ export default function MapPage() {
 
   return (
     <div className="mx-auto max-w-6xl animate-fade-in">
-      <PageHeader title="Карта проблем" action={<button type="button" aria-label="Моё местоположение" className="flex h-11 w-11 items-center justify-center rounded-xl text-slate-700 hover:bg-slate-50"><LocateFixed size={20} /></button>} />
+      <PageHeader title="Карта проблем" action={<button type="button" disabled={locating} onClick={locateUser} aria-label="Определить моё местоположение" className="flex h-11 min-w-11 items-center justify-center rounded-xl text-slate-700 hover:bg-slate-50 disabled:opacity-60">{locating ? <LoaderCircle className="animate-spin" size={20} /> : <LocateFixed size={20} />}</button>} />
       <div className="mb-4 hidden md:flex md:items-end md:justify-between">
         <div><h1 className="text-3xl font-extrabold tracking-tight text-slate-950">Карта городских проблем</h1><p className="mt-1 text-sm text-slate-500">Мусор — в фокусе, остальные обращения остаются доступными</p></div>
         <span className="rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-700">{filtered.length} на карте</span>
@@ -81,6 +110,13 @@ export default function MapPage() {
             ))}
         </div>
 
+        <div className="mb-3 flex items-center justify-between gap-3 px-4 md:px-0">
+          <p role="status" aria-live="polite" className={`min-h-5 text-xs font-semibold ${locationFailed ? 'text-red-600' : 'text-emerald-700'}`}>{locationMessage}</p>
+          <button type="button" disabled={locating} onClick={locateUser} className="inline-flex min-h-10 shrink-0 items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-3 text-xs font-bold text-emerald-700 disabled:opacity-60">
+            {locating ? <LoaderCircle className="animate-spin" size={16} /> : <LocateFixed size={16} />} {locating ? 'Определяем…' : 'Где я'}
+          </button>
+        </div>
+
         <div className="relative h-[60dvh] min-h-[430px] w-full overflow-hidden border-y border-slate-200 md:h-[560px] md:rounded-[18px] md:border">
           <ErrorBoundary fallback={<div className="flex h-full items-center justify-center text-sm text-slate-500">Карта временно недоступна</div>}>
             {reports.length === 0 ? (
@@ -92,6 +128,12 @@ export default function MapPage() {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <FixMapView />
+            {userLocation && <>
+              <ShowCurrentLocation point={userLocation} />
+              <CircleMarker center={[userLocation.latitude, userLocation.longitude]} radius={10} pathOptions={{ color: '#ffffff', weight: 4, fillColor: '#2563eb', fillOpacity: 1 }}>
+                <Tooltip permanent direction="top" offset={[0, -12]}>Вы здесь</Tooltip>
+              </CircleMarker>
+            </>}
             {filtered.map((r) => (
               <Marker
                 key={r.id}

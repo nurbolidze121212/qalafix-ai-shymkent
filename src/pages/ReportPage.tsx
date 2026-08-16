@@ -33,6 +33,12 @@ import { createDemoReport } from '../data/demoReports'
 import { severityColor, severityLabel } from '../utils/formatters'
 import { useDocumentTitle } from '../utils/useDocumentTitle'
 import PageHeader from '../components/layout/PageHeader'
+import {
+  formatDetectedAddress,
+  formatLocationAccuracy,
+  getLocationErrorMessage,
+  requestCurrentLocation,
+} from '../utils/geolocation'
 
 type Step = 'photo' | 'analysis' | 'confirm' | 'success'
 
@@ -73,6 +79,7 @@ export default function ReportPage() {
   const [reportId, setReportId] = useState('')
   const [duplicateCount, setDuplicateCount] = useState(0)
   const [locating, setLocating] = useState(false)
+  const [locationStatus, setLocationStatus] = useState('')
   const [detailsExpanded, setDetailsExpanded] = useState(true)
 
   useEffect(() => {
@@ -148,24 +155,20 @@ export default function ReportPage() {
     setDetailsExpanded(true)
   }
 
-  function useLocation() {
-    if (!navigator.geolocation) {
-      setError('Геолокация недоступна. Укажите адрес вручную.')
-      return
-    }
+  async function useLocation() {
     setLocating(true)
-    navigator.geolocation.getCurrentPosition(
-      ({ coords }) => {
-        setCoordinates({ latitude: coords.latitude, longitude: coords.longitude })
-        setAddress(`Шымкент, координаты ${coords.latitude.toFixed(5)}, ${coords.longitude.toFixed(5)}`)
-        setLocating(false)
-      },
-      () => {
-        setError('Доступ к геолокации запрещён. Укажите адрес вручную.')
-        setLocating(false)
-      },
-      { enableHighAccuracy: true, timeout: 8000 },
-    )
+    setError('')
+    setLocationStatus('')
+    try {
+      const point = await requestCurrentLocation()
+      setCoordinates({ latitude: point.latitude, longitude: point.longitude })
+      setAddress(formatDetectedAddress(point))
+      setLocationStatus(formatLocationAccuracy(point.accuracy))
+    } catch (locationError) {
+      setError(getLocationErrorMessage(locationError))
+    } finally {
+      setLocating(false)
+    }
   }
 
   function submitReport() {
@@ -328,7 +331,15 @@ export default function ReportPage() {
           {!detailsExpanded && (
             <>
               <div className="app-card p-4"><p className="text-[11px] font-semibold text-slate-500">Описание</p><p className="mt-2 text-sm leading-5 text-slate-800">{description}</p></div>
-              <div className="app-card p-4"><div className="flex items-center justify-between gap-3"><div><p className="text-[11px] font-semibold text-slate-500">Адрес</p><p className="mt-1 text-sm font-semibold text-slate-900">{address}</p></div><MapPin size={18} className="shrink-0 text-emerald-600" /></div></div>
+              <div className="app-card p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="min-w-0"><p className="text-[11px] font-semibold text-slate-500">Адрес</p><p className="mt-1 text-sm font-semibold text-slate-900">{address}</p></div>
+                  <button type="button" disabled={locating} onClick={useLocation} aria-label="Определить моё местоположение" className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-xl bg-emerald-50 px-3 text-xs font-bold text-emerald-700 disabled:opacity-60">
+                    {locating ? <LoaderCircle className="animate-spin" size={17} /> : <LocateFixed size={17} />} {locating ? 'Ищем…' : 'Определить'}
+                  </button>
+                </div>
+                {locationStatus && <p role="status" className="mt-3 text-xs font-semibold text-emerald-700">{locationStatus}</p>}
+              </div>
               <button type="button" onClick={() => setDetailsExpanded(true)} className="mx-auto flex min-h-11 items-center gap-2 px-3 text-sm font-semibold text-emerald-700"><PencilLine size={15} /> Изменить детали</button>
             </>
           )}
@@ -361,9 +372,10 @@ export default function ReportPage() {
               <div className="flex flex-col gap-2 sm:flex-row">
                 <input value={address} onChange={(event) => setAddress(event.target.value)} className="app-field min-w-0 flex-1" />
                 <button type="button" disabled={locating} onClick={useLocation} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-slate-300 px-4 text-sm font-semibold text-slate-700 hover:bg-slate-50 disabled:opacity-60">
-                  <LocateFixed size={18} /> {locating ? 'Определяем…' : 'Моё место'}
+                  {locating ? <LoaderCircle className="animate-spin" size={18} /> : <LocateFixed size={18} />} {locating ? 'Определяем…' : 'Определить место'}
                 </button>
               </div>
+              {locationStatus && <span role="status" className="mt-2 block text-xs font-semibold text-emerald-700">{locationStatus}</span>}
             </label>
           </div>}
 
