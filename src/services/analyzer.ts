@@ -125,7 +125,7 @@ async function loadLocalModel(onProgress?: ProgressHandler) {
       const [tf, { load }, prototypeResponse] = await Promise.all([
         import('@tensorflow/tfjs'),
         import('@tensorflow-models/mobilenet'),
-        fetch('/ai/prototypes.json', { cache: 'force-cache' }),
+        fetch(`${import.meta.env.BASE_URL}ai/prototypes.json`, { cache: 'force-cache' }),
       ])
       if (!prototypeResponse.ok) throw new LocalModelUnavailableError('Файл локальной модели не найден')
       const prototypes = await prototypeResponse.json() as PrototypeFile

@@ -259,7 +259,7 @@ export default function ReportPage() {
             <div className="grid grid-cols-3 gap-2.5">
               {demoScenarios.slice(0, 3).map((scenario) => (
                 <button key={scenario.id} type="button" onClick={() => selectDemo(scenario.id)} className="min-w-0 text-left">
-                  <img src={`/demo/${scenario.id}.webp`} alt="" className="aspect-square w-full rounded-[14px] border border-slate-200 object-cover" />
+                  <img src={`${import.meta.env.BASE_URL}demo/${scenario.id}.webp`} alt="" className="aspect-square w-full rounded-[14px] border border-slate-200 object-cover" />
                   <span className="mt-1.5 block truncate text-[11px] font-semibold text-slate-700">{scenario.label}</span>
                 </button>
               ))}

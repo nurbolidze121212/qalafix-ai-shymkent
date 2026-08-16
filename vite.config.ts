@@ -4,7 +4,10 @@ import { VitePWA } from 'vite-plugin-pwa'
 import { sites } from '@openai/sites-vite-plugin'
 import { cloudflare } from '@cloudflare/vite-plugin'
 
+const publicBase = process.env.GITHUB_PAGES === 'true' ? '/qalafix-ai-shymkent/' : '/'
+
 export default defineConfig({
+  base: publicBase,
   plugins: [
     react(),
     VitePWA({
@@ -15,15 +18,16 @@ export default defineConfig({
         short_name: 'QalaFix AI',
         description: 'Сообщайте о городских проблемах по фотографии.',
         lang: 'ru',
-        start_url: '/',
+        start_url: publicBase,
+        scope: publicBase,
         display: 'standalone',
         background_color: '#f8fafc',
         theme_color: '#059669',
         orientation: 'portrait-primary',
         icons: [
-          { src: '/icons/qalafix-192-v2.png', sizes: '192x192', type: 'image/png' },
-          { src: '/icons/qalafix-512-v2.png', sizes: '512x512', type: 'image/png' },
-          { src: '/icons/qalafix-512-v2.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+          { src: `${publicBase}icons/qalafix-192-v2.png`, sizes: '192x192', type: 'image/png' },
+          { src: `${publicBase}icons/qalafix-512-v2.png`, sizes: '512x512', type: 'image/png' },
+          { src: `${publicBase}icons/qalafix-512-v2.png`, sizes: '512x512', type: 'image/png', purpose: 'maskable' },
         ],
       },
       workbox: {
@@ -32,7 +36,7 @@ export default defineConfig({
         skipWaiting: true,
         globPatterns: ['**/*.{js,css,html,svg,png,webp,json}'],
         maximumFileSizeToCacheInBytes: 7 * 1024 * 1024,
-        navigateFallback: '/index.html',
+        navigateFallback: `${publicBase}index.html`,
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/storage\.googleapis\.com\/tfjs-models\//,

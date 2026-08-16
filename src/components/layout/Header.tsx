@@ -15,7 +15,7 @@ export default function Header() {
     <header className="sticky top-0 z-40 hidden border-b border-slate-200 bg-white/95 backdrop-blur-xl md:block">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         <Link to="/" className="flex items-center gap-2" aria-label="QalaFix AI — на главную">
-          <img src="/qalafix.svg" alt="" className="h-10 w-10 rounded-[13px]" />
+          <img src={`${import.meta.env.BASE_URL}qalafix.svg`} alt="" className="h-10 w-10 rounded-[13px]" />
           <div className="leading-tight">
             <div className="text-lg font-bold text-slate-900">QalaFix <span className="text-emerald-600">AI</span></div>
             <div className="text-[11px] font-medium text-slate-500">Городской помощник</div>

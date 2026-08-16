@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl px-4">
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <div className="flex items-center gap-2">
-            <img src="/qalafix.svg" alt="" className="h-8 w-8 rounded-[10px]" />
+            <img src={`${import.meta.env.BASE_URL}qalafix.svg`} alt="" className="h-8 w-8 rounded-[10px]" />
             <span className="text-lg font-bold text-slate-900">QalaFix <span className="text-emerald-600">AI</span></span>
             <span className="text-xs text-slate-500">Шымкент</span>
           </div>
