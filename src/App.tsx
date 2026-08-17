@@ -5,7 +5,6 @@ import HomePage from './pages/HomePage'
 import ReportPage from './pages/ReportPage'
 import MapPage from './pages/MapPage'
 import DashboardPage from './pages/DashboardPage'
-import TechnologyPage from './pages/TechnologyPage'
 import NotFoundPage from './pages/NotFoundPage'
 
 export default function App() {
@@ -18,7 +17,6 @@ export default function App() {
           <Route path="report" element={<ReportPage />} />
           <Route path="map" element={<MapPage />} />
           <Route path="dashboard" element={<DashboardPage />} />
-          <Route path="technology" element={<TechnologyPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
     </Routes>

@@ -1,12 +1,11 @@
 import { Link, useLocation } from 'react-router-dom'
-import { Camera } from 'lucide-react'
+import { Home, Camera, Map, BarChart3 } from 'lucide-react'
 
 const links = [
-  { to: '/', label: 'Главная' },
-  { to: '/report', label: 'Сообщить' },
-  { to: '/map', label: 'Карта' },
-  { to: '/dashboard', label: 'Панель' },
-  { to: '/technology', label: 'Технология' },
+  { to: '/', label: 'Главная', icon: Home },
+  { to: '/report', label: 'Сообщить', icon: Camera },
+  { to: '/map', label: 'Карта', icon: Map },
+  { to: '/dashboard', label: 'Панель', icon: BarChart3 },
 ]
 
 export default function Header() {
