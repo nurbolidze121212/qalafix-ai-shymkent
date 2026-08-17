@@ -1,5 +1,6 @@
 import type { AnalysisResult, ModelClass, Severity, TrashSubtype } from '../types/report'
 import type { MobileNet } from '@tensorflow-models/mobilenet'
+import { loadLearnedSamples, saveLearnedEmbedding } from './learningStore'
 
 export type AnalysisStage = 'loading-model' | 'reading-image' | 'classifying' | 'preparing-result'
 
@@ -179,6 +180,14 @@ function topKAverage(embedding: number[], samples: number[][], count = 3) {
   return selected.reduce((sum, score) => sum + score, 0) / selected.length
 }
 
+async function extractEmbedding(file: File, mobilenet: MobileNet) {
+  const image = await fileToImage(file)
+  const embeddingTensor = mobilenet.infer(image, true)
+  const embedding = Array.from(await embeddingTensor.data())
+  embeddingTensor.dispose()
+  return embedding
+}
+
 function createResult(
   modelClass: ModelClass,
   confidence: number,
@@ -203,15 +212,21 @@ function createResult(
 export async function analyzeImage(file: File, onProgress?: ProgressHandler): Promise<AnalysisResult> {
   const { mobilenet, prototypes } = await loadLocalModel(onProgress)
   onProgress?.('reading-image', 100)
-  const image = await fileToImage(file)
   onProgress?.('classifying', 20)
-  const embeddingTensor = mobilenet.infer(image, true)
-  const embedding = Array.from(await embeddingTensor.data())
-  embeddingTensor.dispose()
+  const embedding = await extractEmbedding(file, mobilenet)
+  const learnedSamples = loadLearnedSamples(embedding.length)
 
   const candidates = (Object.entries(prototypes.samples) as Array<[ModelClass, number[][]]>)
     .filter(([, samples]) => samples.some((sample) => sample.length === embedding.length))
-    .map(([modelClass, samples]) => ({ modelClass, score: topKAverage(embedding, samples) }))
+    .map(([modelClass, samples]) => {
+      const baseScore = topKAverage(embedding, samples)
+      const localSamples = learnedSamples[modelClass]
+      const learnedScore = localSamples.length ? topKAverage(embedding, localSamples, 1) : 0
+      return {
+        modelClass,
+        score: learnedScore >= 0.72 ? Math.max(baseScore, Math.min(1, learnedScore + 0.025)) : baseScore,
+      }
+    })
   if (!candidates.length) throw new LocalModelUnavailableError('Локальная модель повреждена')
 
   candidates.sort((a, b) => b.score - a.score)
@@ -234,6 +249,12 @@ export async function analyzeImage(file: File, onProgress?: ProgressHandler): Pr
       .sort((a, b) => b.score - a.score)[0]?.subtype
   }
   return createResult(topCandidate.modelClass, confidence, 'local-model', trashSubtype, needsReview)
+}
+
+export async function learnFromCorrection(file: File, correctClass: ModelClass) {
+  const { mobilenet } = await loadLocalModel()
+  const embedding = await extractEmbedding(file, mobilenet)
+  return saveLearnedEmbedding(correctClass, embedding)
 }
 
 export async function warmupLocalModel() {

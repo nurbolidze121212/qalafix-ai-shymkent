@@ -10,6 +10,7 @@ import { useDocumentTitle } from '../utils/useDocumentTitle'
 import PageHeader from '../components/layout/PageHeader'
 import { Filter, LoaderCircle, LocateFixed, MapPin } from 'lucide-react'
 import { formatLocationAccuracy, getLocationErrorMessage, requestCurrentLocation, type LocationPoint } from '../utils/geolocation'
+import { reverseGeocode } from '../services/reverseGeocoding'
 
 const center = { lat: 42.316, lng: 69.605 }
 
@@ -58,6 +59,7 @@ export default function MapPage() {
   const [userLocation, setUserLocation] = useState<LocationPoint | null>(null)
   const [locating, setLocating] = useState(false)
   const [locationMessage, setLocationMessage] = useState('')
+  const [userAddress, setUserAddress] = useState('')
   const [locationFailed, setLocationFailed] = useState(false)
 
   async function locateUser() {
@@ -67,7 +69,15 @@ export default function MapPage() {
     try {
       const point = await requestCurrentLocation()
       setUserLocation(point)
-      setLocationMessage(formatLocationAccuracy(point.accuracy))
+      setLocationMessage('Местоположение найдено. Определяем улицу…')
+      try {
+        const exactAddress = await reverseGeocode(point)
+        setUserAddress(exactAddress)
+        setLocationMessage(`${exactAddress} · точность ±${Math.max(1, Math.round(point.accuracy))} м`)
+      } catch {
+        setUserAddress('')
+        setLocationMessage(formatLocationAccuracy(point.accuracy))
+      }
     } catch (locationError) {
       setLocationFailed(true)
       setLocationMessage(getLocationErrorMessage(locationError))
@@ -131,7 +141,7 @@ export default function MapPage() {
             {userLocation && <>
               <ShowCurrentLocation point={userLocation} />
               <CircleMarker center={[userLocation.latitude, userLocation.longitude]} radius={10} pathOptions={{ color: '#ffffff', weight: 4, fillColor: '#2563eb', fillOpacity: 1 }}>
-                <Tooltip permanent direction="top" offset={[0, -12]}>Вы здесь</Tooltip>
+                <Tooltip permanent direction="top" offset={[0, -12]}>{userAddress || 'Вы здесь'}</Tooltip>
               </CircleMarker>
             </>}
             {filtered.map((r) => (
@@ -189,7 +199,7 @@ export default function MapPage() {
             ))}
           </div>
         )}
-        <div className="px-4 pt-3 text-[11px] text-slate-500 md:px-0">Показано {filtered.length} из {reports.length} обращений</div>
+        <div className="px-4 pt-3 text-[11px] text-slate-500 md:px-0">Показано {filtered.length} из {reports.length} обращений · адрес определяется через © OpenStreetMap только после нажатия «Где я»</div>
       </div>
     </div>
   )

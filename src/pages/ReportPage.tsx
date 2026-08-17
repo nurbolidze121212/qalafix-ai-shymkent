@@ -7,11 +7,11 @@ import {
   Check,
   CheckCircle2,
   ImagePlus,
+  Images,
   LoaderCircle,
   LocateFixed,
   MapPin,
   PencilLine,
-  RefreshCw,
   ShieldCheck,
   Sparkles,
   Trash2,
@@ -23,10 +23,13 @@ import {
   createManualResult,
   demoScenarios,
   getSourceLabel,
+  learnFromCorrection,
   LocalModelUnavailableError,
   warmupLocalModel,
   type AnalysisStage,
 } from '../services/analyzer'
+import { getLearnedSampleCount } from '../services/learningStore'
+import { reverseGeocode } from '../services/reverseGeocoding'
 import type { AnalysisResult, ModelClass, Severity } from '../types/report'
 import { generateId, loadReports, saveReports } from '../utils/storage'
 import { createDemoReport } from '../data/demoReports'
@@ -61,7 +64,8 @@ const categoryOptions: Array<{ modelClass: ModelClass; label: string }> = [
 export default function ReportPage() {
   useDocumentTitle('QalaFix AI — Сообщить о проблеме')
   const navigate = useNavigate()
-  const inputRef = useRef<HTMLInputElement>(null)
+  const cameraInputRef = useRef<HTMLInputElement>(null)
+  const galleryInputRef = useRef<HTMLInputElement>(null)
   const [step, setStep] = useState<Step>('photo')
   const [file, setFile] = useState<File | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
@@ -80,7 +84,10 @@ export default function ReportPage() {
   const [duplicateCount, setDuplicateCount] = useState(0)
   const [locating, setLocating] = useState(false)
   const [locationStatus, setLocationStatus] = useState('')
+  const [addressFromOsm, setAddressFromOsm] = useState(false)
   const [detailsExpanded, setDetailsExpanded] = useState(true)
+  const [learningStatus, setLearningStatus] = useState('')
+  const [learnedSampleCount, setLearnedSampleCount] = useState(() => getLearnedSampleCount())
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -105,6 +112,7 @@ export default function ReportPage() {
       setResult(null)
       setModelError('')
       setError('')
+      setLearningStatus('')
     }
     reader.onerror = () => setError('Не удалось открыть изображение. Попробуйте другой файл.')
     reader.readAsDataURL(nextFile)
@@ -150,9 +158,21 @@ export default function ReportPage() {
     setError('')
   }
 
-  function changeCategory(modelClass: ModelClass) {
+  async function changeCategory(modelClass: ModelClass) {
+    const previousResult = result
     applyResult(createManualResult(modelClass))
     setDetailsExpanded(true)
+    if (!file || previousResult?.source !== 'local-model' || previousResult.modelClass === modelClass) return
+
+    setLearningStatus('Запоминаем ваше исправление на этом устройстве…')
+    try {
+      await learnFromCorrection(file, modelClass)
+      const total = getLearnedSampleCount()
+      setLearnedSampleCount(total)
+      setLearningStatus(`AI запомнил исправление · локальных примеров: ${total}`)
+    } catch {
+      setLearningStatus('Категория изменена, но локальный пример сохранить не удалось.')
+    }
   }
 
   async function useLocation() {
@@ -163,7 +183,16 @@ export default function ReportPage() {
       const point = await requestCurrentLocation()
       setCoordinates({ latitude: point.latitude, longitude: point.longitude })
       setAddress(formatDetectedAddress(point))
-      setLocationStatus(formatLocationAccuracy(point.accuracy))
+      setAddressFromOsm(false)
+      setLocationStatus('Координаты найдены. Определяем улицу и дом…')
+      try {
+        const exactAddress = await reverseGeocode(point)
+        setAddress(exactAddress)
+        setAddressFromOsm(true)
+        setLocationStatus(`${formatLocationAccuracy(point.accuracy)} · адрес найден`)
+      } catch {
+        setLocationStatus(`${formatLocationAccuracy(point.accuracy)} · проверьте адрес вручную`)
+      }
     } catch (locationError) {
       setError(getLocationErrorMessage(locationError))
     } finally {
@@ -208,7 +237,8 @@ export default function ReportPage() {
     setError('')
     setModelError('')
     setReportId('')
-    if (inputRef.current) inputRef.current.value = ''
+    if (cameraInputRef.current) cameraInputRef.current.value = ''
+    if (galleryInputRef.current) galleryInputRef.current.value = ''
   }
 
   return (
@@ -233,26 +263,37 @@ export default function ReportPage() {
             {preview ? (
               <div className="relative aspect-[4/3] overflow-hidden rounded-[14px] bg-slate-100">
                 <img src={preview} alt="Выбранная городская проблема" className="h-full w-full object-cover" />
-                <button type="button" onClick={() => inputRef.current?.click()} className="absolute bottom-3 right-3 inline-flex min-h-11 items-center gap-2 rounded-xl bg-white/95 px-4 text-xs font-bold text-slate-800 shadow-lg backdrop-blur">
-                  <RefreshCw size={16} /> Изменить
-                </button>
+                <div className="absolute inset-x-3 bottom-3 flex justify-end gap-2">
+                  <button type="button" onClick={() => cameraInputRef.current?.click()} className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-white/95 px-3 text-xs font-bold text-slate-800 shadow-lg backdrop-blur"><Camera size={16} /> Камера</button>
+                  <button type="button" onClick={() => galleryInputRef.current?.click()} className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-white/95 px-3 text-xs font-bold text-slate-800 shadow-lg backdrop-blur"><Images size={16} /> Галерея</button>
+                </div>
               </div>
             ) : (
-              <button type="button" onClick={() => inputRef.current?.click()} className="flex min-h-64 w-full flex-col items-center justify-center gap-4 rounded-[14px] border border-dashed border-emerald-300 bg-emerald-50/20 p-8 text-center transition-colors hover:bg-emerald-50/60 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-emerald-100">
+              <div className="flex min-h-64 w-full flex-col items-center justify-center gap-4 rounded-[14px] border border-dashed border-emerald-300 bg-emerald-50/20 p-6 text-center">
                 <span className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50 text-emerald-600"><Camera size={28} /></span>
                 <span>
-                  <span className="block text-[15px] font-bold text-slate-950">Сфотографируйте проблему</span>
-                  <span className="mt-1 block text-xs leading-5 text-slate-500">или загрузите готовое фото</span>
+                  <span className="block text-[15px] font-bold text-slate-950">Добавьте фотографию проблемы</span>
+                  <span className="mt-1 block text-xs leading-5 text-slate-500">Снимите сейчас или выберите готовый снимок</span>
                 </span>
-                <span className="app-button-secondary min-h-10 px-5">Выбрать фото</span>
-              </button>
+                <div className="grid w-full max-w-sm grid-cols-2 gap-2">
+                  <button type="button" onClick={() => cameraInputRef.current?.click()} className="app-button-primary min-h-12 px-3"><Camera size={18} /> Камера</button>
+                  <button type="button" onClick={() => galleryInputRef.current?.click()} className="app-button-secondary min-h-12 px-3"><Images size={18} /> Галерея</button>
+                </div>
+              </div>
             )}
             <input
-              ref={inputRef}
+              ref={cameraInputRef}
               className="sr-only"
               type="file"
               accept="image/jpeg,image/png,image/webp"
               capture="environment"
+              onChange={(event) => event.target.files?.[0] && selectFile(event.target.files[0])}
+            />
+            <input
+              ref={galleryInputRef}
+              className="sr-only"
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
               onChange={(event) => event.target.files?.[0] && selectFile(event.target.files[0])}
             />
           </div>
@@ -339,6 +380,7 @@ export default function ReportPage() {
                   </button>
                 </div>
                 {locationStatus && <p role="status" className="mt-3 text-xs font-semibold text-emerald-700">{locationStatus}</p>}
+                {addressFromOsm && <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer" className="mt-1 inline-block text-[10px] text-slate-400 underline">Адрес: © OpenStreetMap</a>}
               </div>
               <button type="button" onClick={() => setDetailsExpanded(true)} className="mx-auto flex min-h-11 items-center gap-2 px-3 text-sm font-semibold text-emerald-700"><PencilLine size={15} /> Изменить детали</button>
             </>
@@ -351,9 +393,11 @@ export default function ReportPage() {
             </label>
             <label className="block">
               <span className="mb-1.5 block text-sm font-semibold text-slate-800">Категория</span>
-              <select value={result.modelClass} onChange={(event) => changeCategory(event.target.value as ModelClass)} className="app-field">
+              <select value={result.modelClass} onChange={(event) => void changeCategory(event.target.value as ModelClass)} className="app-field">
                 {categoryOptions.map((option) => <option key={option.modelClass} value={option.modelClass}>{option.label}</option>)}
               </select>
+              <p className="mt-2 text-xs leading-5 text-slate-500">Исправьте категорию, если AI ошибся — числовой признак фото станет локальным примером только на этом устройстве. Сохранено: {learnedSampleCount}.</p>
+              {learningStatus && <p role="status" className="mt-2 text-xs font-semibold text-emerald-700">{learningStatus}</p>}
             </label>
             <label className="block">
               <span className="mb-1.5 block text-sm font-semibold text-slate-800">Описание</span>
@@ -370,12 +414,14 @@ export default function ReportPage() {
             <label className="block">
               <span className="mb-1.5 block text-sm font-semibold text-slate-800">Адрес</span>
               <div className="flex flex-col gap-2 sm:flex-row">
-                <input value={address} onChange={(event) => setAddress(event.target.value)} className="app-field min-w-0 flex-1" />
+                <input value={address} onChange={(event) => { setAddress(event.target.value); setAddressFromOsm(false) }} className="app-field min-w-0 flex-1" />
                 <button type="button" disabled={locating} onClick={useLocation} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-slate-300 px-4 text-sm font-semibold text-slate-700 hover:bg-slate-50 disabled:opacity-60">
                   {locating ? <LoaderCircle className="animate-spin" size={18} /> : <LocateFixed size={18} />} {locating ? 'Определяем…' : 'Определить место'}
                 </button>
               </div>
               {locationStatus && <span role="status" className="mt-2 block text-xs font-semibold text-emerald-700">{locationStatus}</span>}
+              {addressFromOsm && <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer" className="mt-1 inline-block text-[10px] text-slate-400 underline">Адрес: © OpenStreetMap</a>}
+              <span className="mt-2 block text-[10px] leading-4 text-slate-400">Координаты отправляются в OpenStreetMap только после нажатия кнопки, чтобы определить ближайший адрес.</span>
             </label>
           </div>}
 
