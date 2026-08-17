@@ -32,5 +32,5 @@
     "difficult_positive": 5,
     "clean_scene": 5
   },
-  "externalDatasetPolicy": "Metadata and licenses were audited; no third-party photos are included in the production model."
+  "externalDatasetPolicy": "36 audited TACO images are used only in the training split. Their source URLs and metadata are recorded; validation and final-test contain no TACO training images."
 }

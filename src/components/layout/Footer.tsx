@@ -16,6 +16,7 @@ export default function Footer() {
             <Link to="/report" className="transition hover:text-emerald-600">Сообщить о проблеме</Link>
             <Link to="/map" className="transition hover:text-emerald-600">Карта</Link>
             <Link to="/dashboard" className="transition hover:text-emerald-600">Панель управления</Link>
+            <Link to="/technology" className="transition hover:text-emerald-600">Технология AI</Link>
           </nav>
           <div className="text-xs text-slate-500">
             © {year} QalaFix AI — Smart City Hackathon

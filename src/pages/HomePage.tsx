@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Camera, Map, Recycle, ShieldCheck, WandSparkles } from 'lucide-react'
+import { ArrowRight, Camera, Map, Recycle, ShieldCheck, WandSparkles } from 'lucide-react'
 import { useDocumentTitle } from '../utils/useDocumentTitle'
 
 export default function HomePage() {
@@ -22,6 +22,9 @@ export default function HomePage() {
             <Link to="/report" className="app-button-primary"><Camera size={18} /> Сообщить о проблеме</Link>
             <Link to="/map" className="app-button-secondary"><Map size={18} /> Открыть карту</Link>
           </div>
+          <Link to="/technology" className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-emerald-700 transition-colors hover:text-emerald-800">
+            Как устроен наш AI <ArrowRight size={16} />
+          </Link>
           <div className="mt-7 grid grid-cols-3 gap-2 border-t border-slate-100 pt-5">
             {[
               [WandSparkles, 'AI-анализ', 'Категория и приоритет'],
