@@ -5,7 +5,7 @@ const REVERSE_URL = 'https://nominatim.openstreetmap.org/reverse'
 const CACHE_KEY = 'qalafix-address-cache-v1'
 const CACHE_TTL = 30 * 24 * 60 * 60 * 1000
 const MAX_CACHE_ITEMS = 40
-const USER_AGENT = 'QalaFixAI/1.2 (https://github.com/nurbolidze121212/qalafix-ai-shymkent)'
+const USER_AGENT = 'QalaFixAI/1.3 (https://github.com/nurbolidze121212/qalafix-ai-shymkent)'
 
 type AddressDetails = Record<string, string | undefined>
 
