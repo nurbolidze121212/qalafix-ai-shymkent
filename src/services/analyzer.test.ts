@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { analyzeDemoScenario, createManualResult, demoScenarios, displayTrashSubtype } from './analyzer'
+import { analyzeDemoScenario, createManualResult, demoScenarios, displayTrashSubtype, needsManualReview } from './analyzer'
 
 describe('local analyzer result mapping', () => {
   it('covers the five jury scenarios', () => {
@@ -27,6 +27,11 @@ describe('local analyzer result mapping', () => {
     const result = createManualResult('other')
     expect(result.source).toBe('manual')
     expect(result.needsReview).toBe(true)
+  })
+
+  it('always requires review below 70% confidence', () => {
+    expect(needsManualReview('pothole', 0.55, 0.13, 69)).toBe(true)
+    expect(needsManualReview('pothole', 0.55, 0.13, 70)).toBe(false)
   })
 
   it('uses four clear waste groups instead of over-specific labels', () => {

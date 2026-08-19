@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { BarChart3, CheckCircle2, Clock3, Download, Inbox, Search, SlidersHorizontal, Trash2 } from 'lucide-react'
+import { BarChart3, CheckCircle2, Clock3, Download, Inbox, Search, Trash2 } from 'lucide-react'
 import { loadReports, saveReports } from '../utils/storage'
 import type { CityReport, ReportStatus } from '../types/report'
 import { formatDate, severityColor, severityLabel, statusColor, statusLabel } from '../utils/formatters'
@@ -35,7 +35,7 @@ export default function DashboardPage() {
   const filtered = useMemo(() => {
     const normalized = query.trim().toLowerCase()
     return [...reports]
-      .filter((item) => !normalized || `${item.title} ${item.address} ${item.id}`.toLowerCase().includes(normalized))
+      .filter((item) => !normalized || `${item.title} ${item.category} ${item.address} ${item.id}`.toLowerCase().includes(normalized))
       .sort((left, right) => new Date(right.createdAt).getTime() - new Date(left.createdAt).getTime())
   }, [query, reports])
 
@@ -65,7 +65,7 @@ export default function DashboardPage() {
 
   return (
     <div className="mx-auto max-w-5xl animate-fade-in pb-4">
-      <PageHeader title="Панель оператора" action={<button type="button" aria-label="Фильтры" className="flex h-11 w-11 items-center justify-center rounded-xl text-slate-700 hover:bg-slate-50"><SlidersHorizontal size={19} /></button>} />
+      <PageHeader title="Панель оператора" />
 
       <div className="mb-5 hidden items-end justify-between md:flex">
         <div><div className="flex items-center gap-2"><h1 className="text-3xl font-extrabold tracking-tight text-slate-950">Панель оператора</h1><span className="rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">Демо-данные</span></div><p className="mt-1 text-sm text-slate-500">Обращения жителей и работа городских служб</p></div>

@@ -153,9 +153,12 @@ export default function ReportPage() {
   }
 
   function selectDemo(modelClass: ModelClass) {
+    setFile(null)
+    setPreview(`${import.meta.env.BASE_URL}demo/${modelClass}.webp`)
     applyResult(analyzeDemoScenario(modelClass))
     setModelError('')
     setError('')
+    setLearningStatus('')
   }
 
   async function changeCategory(modelClass: ModelClass) {
@@ -286,6 +289,7 @@ export default function ReportPage() {
             )}
             <input
               ref={cameraInputRef}
+              aria-label="Сделать фото"
               className="sr-only"
               type="file"
               accept="image/jpeg,image/png,image/webp"
@@ -294,6 +298,7 @@ export default function ReportPage() {
             />
             <input
               ref={galleryInputRef}
+              aria-label="Выбрать фото из галереи"
               className="sr-only"
               type="file"
               accept="image/jpeg,image/png,image/webp"
@@ -303,11 +308,11 @@ export default function ReportPage() {
 
           <div>
             <div className="mb-3 flex items-center justify-between"><h2 className="text-sm font-bold text-slate-950">Быстрые примеры</h2><span className="text-[10px] font-semibold text-slate-400">ДЕМО-РЕЖИМ</span></div>
-            <div className="grid grid-cols-3 gap-2.5">
-              {demoScenarios.slice(0, 3).map((scenario) => (
-                <button key={scenario.id} type="button" onClick={() => selectDemo(scenario.id)} className="min-w-0 text-left">
-                  <img src={`${import.meta.env.BASE_URL}demo/${scenario.id}.webp`} alt="" className="aspect-square w-full rounded-[14px] border border-slate-200 object-cover" />
-                  <span className="mt-1.5 block truncate text-[11px] font-semibold text-slate-700">{scenario.label}</span>
+            <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-5">
+              {demoScenarios.map((scenario) => (
+                <button key={scenario.id} type="button" aria-label={scenario.label} onClick={() => selectDemo(scenario.id)} className="min-w-0 text-left">
+                  <img src={`${import.meta.env.BASE_URL}demo/${scenario.id}.webp`} alt={`Пример: ${scenario.label}`} className="aspect-square w-full rounded-[14px] border border-slate-200 object-cover" />
+                  <span className="mt-1.5 line-clamp-2 block min-h-8 text-[11px] font-semibold leading-4 text-slate-700">{scenario.label}</span>
                 </button>
               ))}
             </div>
