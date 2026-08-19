@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { analyzeDemoScenario, createManualResult, demoScenarios } from './analyzer'
+import { analyzeDemoScenario, createManualResult, demoScenarios, displayTrashSubtype } from './analyzer'
 
 describe('local analyzer result mapping', () => {
   it('covers the five jury scenarios', () => {
@@ -27,5 +27,11 @@ describe('local analyzer result mapping', () => {
     const result = createManualResult('other')
     expect(result.source).toBe('manual')
     expect(result.needsReview).toBe(true)
+  })
+
+  it('uses four clear waste groups instead of over-specific labels', () => {
+    expect(displayTrashSubtype('single_litter')).toBe('scattered_litter')
+    expect(displayTrashSubtype('waste_pile')).toBe('illegal_dump')
+    expect(displayTrashSubtype('overflowing_bin')).toBe('overflowing_bin')
   })
 })

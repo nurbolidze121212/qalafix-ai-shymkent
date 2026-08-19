@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "license": "project-owned synthetic images generated for QalaFix AI",
+  "license": "project-owned synthetic images plus an attributed TACO training-only sample",
   "privacy": "prompts exclude people, faces, readable number plates, brands and watermarks",
   "split": {
     "training": {
@@ -32,5 +32,5 @@
     "difficult_positive": 5,
     "clean_scene": 5
   },
-  "externalDatasetPolicy": "Metadata and licenses were audited; no third-party photos are included in the production model."
+  "externalDatasetPolicy": "36 attributed TACO images are used only in the training split; their source URLs are recorded and they never enter validation or final-test."
 }

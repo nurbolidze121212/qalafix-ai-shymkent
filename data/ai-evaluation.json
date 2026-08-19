@@ -1,5 +1,6 @@
 {
-  "version": 2,
+  "version": 3,
+  "architecture": "MobileNetV2 alpha 0.5 embeddings + balanced MLP classifier head + top-k trash subtypes",
   "split": {
     "training": 176,
     "validation": 30,
@@ -7,11 +8,14 @@
     "baseRatio": "70/15/15",
     "externalTrainingOnly": 36
   },
-  "correct": 29,
+  "correct": 30,
   "total": 30,
-  "trashRecall": 0.96,
+  "combinedCorrect": 34,
+  "combinedTotal": 34,
+  "trashRecall": 1,
   "cleanSpecificity": 1,
-  "trashSubtypeAccuracy": 0.76,
+  "trashSubtypeExactAccuracy": 0.76,
+  "trashSubtypeAccuracy": 0.92,
   "validationAccuracy": 1,
   "benchmarkGroups": {
     "overflowing_container": {
@@ -31,13 +35,180 @@
       "total": 5
     },
     "difficult_positive": {
-      "correct": 4,
+      "correct": 5,
       "total": 5
     },
     "clean_scene": {
       "correct": 5,
       "total": 5
     }
+  },
+  "demoRegression": {
+    "correct": 5,
+    "total": 5,
+    "results": [
+      {
+        "file": "public/demo/trash.webp",
+        "expected": "trash",
+        "predicted": "trash",
+        "correct": true,
+        "predictedSubtype": "overflowing_bin",
+        "scores": [
+          {
+            "label": "trash",
+            "score": 0.9942186033477525
+          },
+          {
+            "label": "water_leak",
+            "score": 0.00269182311951116
+          },
+          {
+            "label": "broken_bench",
+            "score": 0.0012129719306429206
+          },
+          {
+            "label": "manhole",
+            "score": 0.0011658716550150589
+          },
+          {
+            "label": "pothole",
+            "score": 0.0003897880312999059
+          },
+          {
+            "label": "other",
+            "score": 0.00032094191577839527
+          }
+        ]
+      },
+      {
+        "file": "public/demo/manhole.webp",
+        "expected": "manhole",
+        "predicted": "manhole",
+        "correct": true,
+        "scores": [
+          {
+            "label": "manhole",
+            "score": 0.929876793805538
+          },
+          {
+            "label": "trash",
+            "score": 0.035513493148022206
+          },
+          {
+            "label": "pothole",
+            "score": 0.0178871373467178
+          },
+          {
+            "label": "water_leak",
+            "score": 0.010621023747927992
+          },
+          {
+            "label": "other",
+            "score": 0.0039040218743901112
+          },
+          {
+            "label": "broken_bench",
+            "score": 0.0021975300774039782
+          }
+        ]
+      },
+      {
+        "file": "public/demo/pothole.webp",
+        "expected": "pothole",
+        "predicted": "pothole",
+        "correct": true,
+        "scores": [
+          {
+            "label": "pothole",
+            "score": 0.9325351706139883
+          },
+          {
+            "label": "water_leak",
+            "score": 0.02806669526020916
+          },
+          {
+            "label": "manhole",
+            "score": 0.0179293848739826
+          },
+          {
+            "label": "trash",
+            "score": 0.008833709553252956
+          },
+          {
+            "label": "broken_bench",
+            "score": 0.007615772978541829
+          },
+          {
+            "label": "other",
+            "score": 0.005019266720025157
+          }
+        ]
+      },
+      {
+        "file": "public/demo/water_leak.webp",
+        "expected": "water_leak",
+        "predicted": "water_leak",
+        "correct": true,
+        "scores": [
+          {
+            "label": "water_leak",
+            "score": 0.801630398827449
+          },
+          {
+            "label": "trash",
+            "score": 0.08686300721089532
+          },
+          {
+            "label": "broken_bench",
+            "score": 0.0668461859986419
+          },
+          {
+            "label": "pothole",
+            "score": 0.01831058544503233
+          },
+          {
+            "label": "manhole",
+            "score": 0.016106593697011687
+          },
+          {
+            "label": "other",
+            "score": 0.010243228820969726
+          }
+        ]
+      },
+      {
+        "file": "public/demo/broken_bench.webp",
+        "expected": "broken_bench",
+        "predicted": "broken_bench",
+        "correct": true,
+        "scores": [
+          {
+            "label": "broken_bench",
+            "score": 0.9324667929034408
+          },
+          {
+            "label": "other",
+            "score": 0.03543854181331406
+          },
+          {
+            "label": "trash",
+            "score": 0.018815181287988626
+          },
+          {
+            "label": "pothole",
+            "score": 0.005348600219059389
+          },
+          {
+            "label": "water_leak",
+            "score": 0.004058856040446756
+          },
+          {
+            "label": "manhole",
+            "score": 0.0038720277357503106
+          }
+        ]
+      }
+    ]
   },
   "categoryRegression": {
     "correct": 4,
@@ -51,27 +222,27 @@
         "scores": [
           {
             "label": "manhole",
-            "score": 0.7222497951000003
-          },
-          {
-            "label": "pothole",
-            "score": 0.5049947656666669
+            "score": 0.929876793805538
           },
           {
             "label": "trash",
-            "score": 0.46781481010000014
+            "score": 0.035513493148022206
+          },
+          {
+            "label": "pothole",
+            "score": 0.0178871373467178
           },
           {
             "label": "water_leak",
-            "score": 0.4350476281333335
+            "score": 0.010621023747927992
           },
           {
             "label": "other",
-            "score": 0.3777069084666666
+            "score": 0.0039040218743901112
           },
           {
             "label": "broken_bench",
-            "score": 0.37012569243333343
+            "score": 0.0021975300774039782
           }
         ]
       },
@@ -83,27 +254,27 @@
         "scores": [
           {
             "label": "pothole",
-            "score": 0.7019727384666669
+            "score": 0.9325351706139883
           },
           {
             "label": "water_leak",
-            "score": 0.5467813741666666
+            "score": 0.02806669526020916
           },
           {
             "label": "manhole",
-            "score": 0.5391323977333331
+            "score": 0.0179293848739826
           },
           {
             "label": "trash",
-            "score": 0.48618758083333313
+            "score": 0.008833709553252956
           },
           {
             "label": "broken_bench",
-            "score": 0.4615677555666666
+            "score": 0.007615772978541829
           },
           {
             "label": "other",
-            "score": 0.4232048911666666
+            "score": 0.005019266720025157
           }
         ]
       },
@@ -115,27 +286,27 @@
         "scores": [
           {
             "label": "water_leak",
-            "score": 0.6518159546666668
-          },
-          {
-            "label": "broken_bench",
-            "score": 0.5623367781333336
+            "score": 0.801630398827449
           },
           {
             "label": "trash",
-            "score": 0.5386223869000003
+            "score": 0.08686300721089532
+          },
+          {
+            "label": "broken_bench",
+            "score": 0.0668461859986419
           },
           {
             "label": "pothole",
-            "score": 0.5196010038333337
+            "score": 0.01831058544503233
           },
           {
             "label": "manhole",
-            "score": 0.46419757283333335
+            "score": 0.016106593697011687
           },
           {
             "label": "other",
-            "score": 0.4286317774666666
+            "score": 0.010243228820969726
           }
         ]
       },
@@ -147,27 +318,27 @@
         "scores": [
           {
             "label": "broken_bench",
-            "score": 0.7258343315666665
+            "score": 0.9324667929034408
           },
           {
             "label": "other",
-            "score": 0.5285483392000002
+            "score": 0.03543854181331406
           },
           {
             "label": "trash",
-            "score": 0.44836324383333337
-          },
-          {
-            "label": "manhole",
-            "score": 0.44456524176666673
-          },
-          {
-            "label": "water_leak",
-            "score": 0.42182870529999983
+            "score": 0.018815181287988626
           },
           {
             "label": "pothole",
-            "score": 0.4077386988333334
+            "score": 0.005348600219059389
+          },
+          {
+            "label": "water_leak",
+            "score": 0.004058856040446756
+          },
+          {
+            "label": "manhole",
+            "score": 0.0038720277357503106
           }
         ]
       }
@@ -184,27 +355,27 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.6762476342999998
+          "score": 0.9652139735259218
         },
         {
           "label": "pothole",
-          "score": 0.39368973083333286
-        },
-        {
-          "label": "water_leak",
-          "score": 0.3833638461999998
+          "score": 0.010471391040056312
         },
         {
           "label": "broken_bench",
-          "score": 0.3682488438000002
-        },
-        {
-          "label": "manhole",
-          "score": 0.3542788293666665
+          "score": 0.007345367365301135
         },
         {
           "label": "other",
-          "score": 0.30656124776666677
+          "score": 0.006060244827952938
+        },
+        {
+          "label": "manhole",
+          "score": 0.005687895925990854
+        },
+        {
+          "label": "water_leak",
+          "score": 0.005221127314776995
         }
       ]
     },
@@ -218,27 +389,27 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.6755979548000002
-        },
-        {
-          "label": "broken_bench",
-          "score": 0.4320644261333331
+          "score": 0.996613100100056
         },
         {
           "label": "water_leak",
-          "score": 0.4199568949333332
-        },
-        {
-          "label": "pothole",
-          "score": 0.38414937909999997
+          "score": 0.0009104783501404977
         },
         {
           "label": "other",
-          "score": 0.3785458880666665
+          "score": 0.0009036215021813024
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.0007935388019816025
         },
         {
           "label": "manhole",
-          "score": 0.37156528623333335
+          "score": 0.0005345351772556941
+        },
+        {
+          "label": "pothole",
+          "score": 0.00024472606838493055
         }
       ]
     },
@@ -252,27 +423,27 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.7015946924999995
-        },
-        {
-          "label": "pothole",
-          "score": 0.5686862309999999
+          "score": 0.9658499348751752
         },
         {
           "label": "water_leak",
-          "score": 0.5263034312666669
+          "score": 0.011847845233155784
         },
         {
           "label": "other",
-          "score": 0.48842425763333347
+          "score": 0.009124031941594488
         },
         {
-          "label": "broken_bench",
-          "score": 0.45216880340000004
+          "label": "pothole",
+          "score": 0.006597123651714729
         },
         {
           "label": "manhole",
-          "score": 0.4489603801666667
+          "score": 0.0036171522586150996
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.0029639120397445145
         }
       ]
     },
@@ -286,27 +457,27 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.7100450466333333
+          "score": 0.9858142005150434
         },
         {
           "label": "other",
-          "score": 0.4384071981999999
-        },
-        {
-          "label": "water_leak",
-          "score": 0.4328236032666666
+          "score": 0.00838601199285272
         },
         {
           "label": "manhole",
-          "score": 0.4094354477999999
+          "score": 0.002116603305931326
         },
         {
-          "label": "pothole",
-          "score": 0.4076871113000002
+          "label": "water_leak",
+          "score": 0.00204455207395252
         },
         {
           "label": "broken_bench",
-          "score": 0.39514099266666675
+          "score": 0.0009372128939012159
+        },
+        {
+          "label": "pothole",
+          "score": 0.000701419218318578
         }
       ]
     },
@@ -320,27 +491,27 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.6995058116333331
-        },
-        {
-          "label": "pothole",
-          "score": 0.5349340495333332
+          "score": 0.9934276653404832
         },
         {
           "label": "water_leak",
-          "score": 0.45837304056666667
+          "score": 0.0028829764354628444
+        },
+        {
+          "label": "pothole",
+          "score": 0.002332447139720231
         },
         {
           "label": "broken_bench",
-          "score": 0.3666078404333331
+          "score": 0.0005426278106109557
         },
         {
           "label": "manhole",
-          "score": 0.35542558323333323
+          "score": 0.000499454899363509
         },
         {
           "label": "other",
-          "score": 0.3132591060999998
+          "score": 0.0003148283743592773
         }
       ]
     },
@@ -354,27 +525,27 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.682985325166667
-        },
-        {
-          "label": "broken_bench",
-          "score": 0.5241397561333334
-        },
-        {
-          "label": "water_leak",
-          "score": 0.5161836946999997
-        },
-        {
-          "label": "pothole",
-          "score": 0.4984761408333333
-        },
-        {
-          "label": "manhole",
-          "score": 0.4878672367333332
+          "score": 0.9622229619792725
         },
         {
           "label": "other",
-          "score": 0.4617042359333334
+          "score": 0.01032766404842068
+        },
+        {
+          "label": "manhole",
+          "score": 0.00906307680443325
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.007829531811413238
+        },
+        {
+          "label": "pothole",
+          "score": 0.005724437147932797
+        },
+        {
+          "label": "water_leak",
+          "score": 0.0048323282085278516
         }
       ]
     },
@@ -388,27 +559,27 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.6978253982333341
+          "score": 0.9501837643421899
         },
         {
           "label": "pothole",
-          "score": 0.6193021881999999
+          "score": 0.034967170914075696
         },
         {
           "label": "water_leak",
-          "score": 0.5482770732000002
+          "score": 0.00524840636159678
         },
         {
           "label": "manhole",
-          "score": 0.4872907479999998
+          "score": 0.0040789447614907335
         },
         {
           "label": "broken_bench",
-          "score": 0.45220203373333323
+          "score": 0.0028655589520276722
         },
         {
           "label": "other",
-          "score": 0.4476281221
+          "score": 0.002656154668619209
         }
       ]
     },
@@ -422,27 +593,27 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.7877328180333337
-        },
-        {
-          "label": "pothole",
-          "score": 0.4604601450333332
+          "score": 0.9968961150007535
         },
         {
           "label": "water_leak",
-          "score": 0.4404991765000001
-        },
-        {
-          "label": "broken_bench",
-          "score": 0.4095869464000002
+          "score": 0.0009755312292987764
         },
         {
           "label": "other",
-          "score": 0.40756432163333334
+          "score": 0.0006326941821971374
+        },
+        {
+          "label": "pothole",
+          "score": 0.0005354868734735382
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.0004956436940963025
         },
         {
           "label": "manhole",
-          "score": 0.39209373683333343
+          "score": 0.00046452902018102925
         }
       ]
     },
@@ -456,27 +627,27 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.6985714779999999
-        },
-        {
-          "label": "pothole",
-          "score": 0.46679040193333315
-        },
-        {
-          "label": "water_leak",
-          "score": 0.4092137945333332
+          "score": 0.9968252589420669
         },
         {
           "label": "other",
-          "score": 0.3926455427666667
+          "score": 0.0009650238876568684
+        },
+        {
+          "label": "pothole",
+          "score": 0.0008026065675453325
+        },
+        {
+          "label": "water_leak",
+          "score": 0.0005276508835915084
         },
         {
           "label": "broken_bench",
-          "score": 0.38764919313333307
+          "score": 0.00045707964487131774
         },
         {
           "label": "manhole",
-          "score": 0.36996705963333304
+          "score": 0.0004223800742680096
         }
       ]
     },
@@ -490,27 +661,27 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.7665259655
-        },
-        {
-          "label": "water_leak",
-          "score": 0.46483445280000035
-        },
-        {
-          "label": "broken_bench",
-          "score": 0.4613342345000002
-        },
-        {
-          "label": "pothole",
-          "score": 0.4610511821666668
+          "score": 0.9958952918609356
         },
         {
           "label": "manhole",
-          "score": 0.4520480323000002
+          "score": 0.0011490798070994573
+        },
+        {
+          "label": "water_leak",
+          "score": 0.0011125658282081419
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.0008633144679729894
+        },
+        {
+          "label": "pothole",
+          "score": 0.0006101506244380818
         },
         {
           "label": "other",
-          "score": 0.40930362986666685
+          "score": 0.00036959741134582523
         }
       ]
     },
@@ -524,27 +695,27 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.6134864256999997
-        },
-        {
-          "label": "pothole",
-          "score": 0.4812056698666667
+          "score": 0.8767375571188707
         },
         {
           "label": "other",
-          "score": 0.4454135388333334
+          "score": 0.056676630491091784
         },
         {
-          "label": "water_leak",
-          "score": 0.44293985473333386
+          "label": "pothole",
+          "score": 0.031161796332624146
         },
         {
           "label": "broken_bench",
-          "score": 0.4261728709000001
+          "score": 0.016310074395290444
+        },
+        {
+          "label": "water_leak",
+          "score": 0.012456318265828235
         },
         {
           "label": "manhole",
-          "score": 0.3852286487333331
+          "score": 0.00665762339629462
         }
       ]
     },
@@ -558,27 +729,27 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.7329818875000012
+          "score": 0.9932951502888
         },
         {
           "label": "pothole",
-          "score": 0.48481428686666667
-        },
-        {
-          "label": "water_leak",
-          "score": 0.4567456859666667
+          "score": 0.0020666652941959645
         },
         {
           "label": "broken_bench",
-          "score": 0.4533508460333333
+          "score": 0.0016863670979319276
+        },
+        {
+          "label": "water_leak",
+          "score": 0.001577973914738296
         },
         {
           "label": "other",
-          "score": 0.3675819254333334
+          "score": 0.0009818559388825748
         },
         {
           "label": "manhole",
-          "score": 0.3563425057333331
+          "score": 0.00039198746545123186
         }
       ]
     },
@@ -592,27 +763,27 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.695129445966666
+          "score": 0.9698764582332772
         },
         {
           "label": "pothole",
-          "score": 0.5342657889666669
+          "score": 0.01766972408041713
         },
         {
           "label": "water_leak",
-          "score": 0.48638397980000003
+          "score": 0.004798702792671813
         },
         {
           "label": "broken_bench",
-          "score": 0.4398517697
+          "score": 0.0036889789950008737
         },
         {
           "label": "manhole",
-          "score": 0.41663370243333336
+          "score": 0.0025192241504924085
         },
         {
           "label": "other",
-          "score": 0.38440226429999996
+          "score": 0.0014469117481408058
         }
       ]
     },
@@ -626,27 +797,27 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.7321048496666669
-        },
-        {
-          "label": "water_leak",
-          "score": 0.5425399048000002
-        },
-        {
-          "label": "pothole",
-          "score": 0.5252388822666667
+          "score": 0.9594899908347937
         },
         {
           "label": "other",
-          "score": 0.5244931050666669
+          "score": 0.022062096421521384
+        },
+        {
+          "label": "water_leak",
+          "score": 0.008698977654965563
+        },
+        {
+          "label": "pothole",
+          "score": 0.0040996364936360516
         },
         {
           "label": "broken_bench",
-          "score": 0.42894497206666665
+          "score": 0.0030464054513742477
         },
         {
           "label": "manhole",
-          "score": 0.4285467502666666
+          "score": 0.002602893143708784
         }
       ]
     },
@@ -660,27 +831,27 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.7416281456333335
+          "score": 0.9630522688614791
         },
         {
           "label": "pothole",
-          "score": 0.5774383172999996
+          "score": 0.014170075962387299
         },
         {
           "label": "water_leak",
-          "score": 0.5095908358666666
+          "score": 0.014115592689811246
         },
         {
           "label": "other",
-          "score": 0.4085922250666671
-        },
-        {
-          "label": "manhole",
-          "score": 0.38064659243333354
+          "score": 0.004091844783443338
         },
         {
           "label": "broken_bench",
-          "score": 0.37002266729999983
+          "score": 0.0023073059061824
+        },
+        {
+          "label": "manhole",
+          "score": 0.0022629117966967154
         }
       ]
     },
@@ -694,27 +865,27 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.6453240641333332
-        },
-        {
-          "label": "water_leak",
-          "score": 0.5696347542666668
+          "score": 0.6684632368065236
         },
         {
           "label": "broken_bench",
-          "score": 0.5518325350333335
+          "score": 0.1430596659616677
         },
         {
           "label": "other",
-          "score": 0.5486280638999997
+          "score": 0.098562813444261
         },
         {
-          "label": "pothole",
-          "score": 0.4973231226666668
+          "label": "water_leak",
+          "score": 0.07382993597129686
         },
         {
           "label": "manhole",
-          "score": 0.4445102399000001
+          "score": 0.00981360797437269
+        },
+        {
+          "label": "pothole",
+          "score": 0.006270739841878168
         }
       ]
     },
@@ -728,27 +899,27 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.7112156677666661
+          "score": 0.9693672974924109
         },
         {
           "label": "pothole",
-          "score": 0.5335620521666665
-        },
-        {
-          "label": "water_leak",
-          "score": 0.44755174726666686
-        },
-        {
-          "label": "manhole",
-          "score": 0.44307288773333325
+          "score": 0.01197190345252033
         },
         {
           "label": "other",
-          "score": 0.44239957039999983
+          "score": 0.007118079623612202
+        },
+        {
+          "label": "manhole",
+          "score": 0.006378973079919124
+        },
+        {
+          "label": "water_leak",
+          "score": 0.0028713012350150054
         },
         {
           "label": "broken_bench",
-          "score": 0.39807911589999984
+          "score": 0.0022924451165224407
         }
       ]
     },
@@ -762,27 +933,27 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.7001555933000002
-        },
-        {
-          "label": "pothole",
-          "score": 0.5444742951333331
+          "score": 0.9568052507946214
         },
         {
           "label": "water_leak",
-          "score": 0.5105879869666666
+          "score": 0.013632387739881667
+        },
+        {
+          "label": "pothole",
+          "score": 0.010134996768242532
         },
         {
           "label": "other",
-          "score": 0.44887673819999985
+          "score": 0.00987485034803767
         },
         {
           "label": "broken_bench",
-          "score": 0.43990921440000036
+          "score": 0.0065965114483779
         },
         {
           "label": "manhole",
-          "score": 0.4095383632333331
+          "score": 0.002956002900839021
         }
       ]
     },
@@ -796,27 +967,27 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.6738408775666662
+          "score": 0.857829987057391
         },
         {
           "label": "pothole",
-          "score": 0.549172604066667
+          "score": 0.0743816664584376
         },
         {
           "label": "water_leak",
-          "score": 0.5165055237333336
-        },
-        {
-          "label": "other",
-          "score": 0.4347964475666665
+          "score": 0.032840525892234025
         },
         {
           "label": "manhole",
-          "score": 0.4291284461666665
+          "score": 0.020733485037151247
+        },
+        {
+          "label": "other",
+          "score": 0.007192734053452088
         },
         {
           "label": "broken_bench",
-          "score": 0.4034803239666665
+          "score": 0.0070216015013340105
         }
       ]
     },
@@ -830,27 +1001,27 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.7515166169333335
-        },
-        {
-          "label": "pothole",
-          "score": 0.5419577235666667
+          "score": 0.9895523647699591
         },
         {
           "label": "water_leak",
-          "score": 0.46352921896666666
+          "score": 0.00375120391851479
+        },
+        {
+          "label": "pothole",
+          "score": 0.003104803899485821
         },
         {
           "label": "other",
-          "score": 0.41925555116666663
-        },
-        {
-          "label": "broken_bench",
-          "score": 0.41356650339999995
+          "score": 0.0014054743825128945
         },
         {
           "label": "manhole",
-          "score": 0.4089172755666666
+          "score": 0.0013551811687028484
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.0008309718608242646
         }
       ]
     },
@@ -864,60 +1035,61 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.6270270519666664
-        },
-        {
-          "label": "pothole",
-          "score": 0.5063126458333332
-        },
-        {
-          "label": "water_leak",
-          "score": 0.44458114986666697
+          "score": 0.9239203357959284
         },
         {
           "label": "other",
-          "score": 0.41062940676666687
+          "score": 0.03014541119255877
+        },
+        {
+          "label": "pothole",
+          "score": 0.02428636202570689
+        },
+        {
+          "label": "water_leak",
+          "score": 0.01109145165508972
         },
         {
           "label": "broken_bench",
-          "score": 0.40277564153333345
+          "score": 0.005904523908913943
         },
         {
           "label": "manhole",
-          "score": 0.37700445583333325
+          "score": 0.004651915421802309
         }
       ]
     },
     {
       "file": "data/ai-v2/final-test/trash/blind3-10.webp",
       "expected": "trash",
-      "predicted": "pothole",
-      "correct": false,
+      "predicted": "trash",
+      "correct": true,
       "expectedSubtype": "scattered_litter",
+      "predictedSubtype": "illegal_dump",
       "scores": [
         {
-          "label": "pothole",
-          "score": 0.5528033899333332
+          "label": "trash",
+          "score": 0.31867815860457843
         },
         {
-          "label": "trash",
-          "score": 0.5240011545
+          "label": "pothole",
+          "score": 0.2536465079079205
         },
         {
           "label": "water_leak",
-          "score": 0.5149573388333338
+          "score": 0.22124999500566078
         },
         {
           "label": "other",
-          "score": 0.4395803746666667
-        },
-        {
-          "label": "manhole",
-          "score": 0.43743160310000007
+          "score": 0.07981452711805992
         },
         {
           "label": "broken_bench",
-          "score": 0.42934094966666675
+          "score": 0.07382016307734961
+        },
+        {
+          "label": "manhole",
+          "score": 0.052790648286430826
         }
       ]
     },
@@ -931,27 +1103,27 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.6144390994999994
+          "score": 0.3535654335201824
         },
         {
           "label": "water_leak",
-          "score": 0.5838234691666667
+          "score": 0.23010719577406857
         },
         {
           "label": "pothole",
-          "score": 0.5550795275999993
-        },
-        {
-          "label": "broken_bench",
-          "score": 0.4905172262
-        },
-        {
-          "label": "other",
-          "score": 0.4868300505666669
+          "score": 0.22626677543584392
         },
         {
           "label": "manhole",
-          "score": 0.46568980310000013
+          "score": 0.07552956898337816
+        },
+        {
+          "label": "other",
+          "score": 0.06058737672276222
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.05394364956376471
         }
       ]
     },
@@ -965,27 +1137,27 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.6525784751333333
+          "score": 0.914245028601535
         },
         {
           "label": "pothole",
-          "score": 0.5671499285333331
+          "score": 0.06501205147759882
         },
         {
           "label": "water_leak",
-          "score": 0.4874825997666669
+          "score": 0.013836737139925023
         },
         {
           "label": "manhole",
-          "score": 0.4055542661999998
+          "score": 0.0037013351809579483
         },
         {
           "label": "broken_bench",
-          "score": 0.3722054695333332
+          "score": 0.0021077561569083853
         },
         {
           "label": "other",
-          "score": 0.32553214766666655
+          "score": 0.0010970914430749436
         }
       ]
     },
@@ -999,27 +1171,27 @@
       "scores": [
         {
           "label": "trash",
-          "score": 0.5634714521666662
+          "score": 0.8494385723152459
         },
         {
           "label": "pothole",
-          "score": 0.5243478731333334
-        },
-        {
-          "label": "water_leak",
-          "score": 0.42803218106666674
+          "score": 0.0730846602039559
         },
         {
           "label": "other",
-          "score": 0.4109619072666666
+          "score": 0.045177596095268995
+        },
+        {
+          "label": "water_leak",
+          "score": 0.016057908736285133
         },
         {
           "label": "broken_bench",
-          "score": 0.37876949919999997
+          "score": 0.008512956195569452
         },
         {
           "label": "manhole",
-          "score": 0.3630113475000001
+          "score": 0.007728306453674842
         }
       ]
     },
@@ -1031,27 +1203,27 @@
       "scores": [
         {
           "label": "other",
-          "score": 0.7555778692333335
-        },
-        {
-          "label": "water_leak",
-          "score": 0.5028396044999999
+          "score": 0.9808026580754099
         },
         {
           "label": "trash",
-          "score": 0.4774025154333333
+          "score": 0.007011485042640699
+        },
+        {
+          "label": "water_leak",
+          "score": 0.004681449253000403
         },
         {
           "label": "broken_bench",
-          "score": 0.46095047113333326
-        },
-        {
-          "label": "pothole",
-          "score": 0.4367643798333333
+          "score": 0.004277836973037806
         },
         {
           "label": "manhole",
-          "score": 0.43270602646666684
+          "score": 0.0024550703722176406
+        },
+        {
+          "label": "pothole",
+          "score": 0.0007715002836936585
         }
       ]
     },
@@ -1063,27 +1235,27 @@
       "scores": [
         {
           "label": "other",
-          "score": 0.6930883827666663
-        },
-        {
-          "label": "pothole",
-          "score": 0.5581577385000002
+          "score": 0.9382961373549469
         },
         {
           "label": "trash",
-          "score": 0.5169731082333332
-        },
-        {
-          "label": "water_leak",
-          "score": 0.4953906351333337
+          "score": 0.01999633244426448
         },
         {
           "label": "manhole",
-          "score": 0.48181725960000005
+          "score": 0.015593137735897104
+        },
+        {
+          "label": "pothole",
+          "score": 0.013896128742782584
+        },
+        {
+          "label": "water_leak",
+          "score": 0.006998945350605533
         },
         {
           "label": "broken_bench",
-          "score": 0.3792056004666668
+          "score": 0.005219318371503369
         }
       ]
     },
@@ -1095,27 +1267,27 @@
       "scores": [
         {
           "label": "other",
-          "score": 0.5506404526000005
-        },
-        {
-          "label": "water_leak",
-          "score": 0.5371287485333333
-        },
-        {
-          "label": "pothole",
-          "score": 0.5370172643999999
-        },
-        {
-          "label": "manhole",
-          "score": 0.5127155812999997
-        },
-        {
-          "label": "broken_bench",
-          "score": 0.48515087526666695
+          "score": 0.4754208049270029
         },
         {
           "label": "trash",
-          "score": 0.47987143180000014
+          "score": 0.23364690286701162
+        },
+        {
+          "label": "manhole",
+          "score": 0.10673929976937
+        },
+        {
+          "label": "water_leak",
+          "score": 0.09367306915914499
+        },
+        {
+          "label": "pothole",
+          "score": 0.05361574180852295
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.03690418146894772
         }
       ]
     },
@@ -1127,27 +1299,27 @@
       "scores": [
         {
           "label": "other",
-          "score": 0.7409973571333329
-        },
-        {
-          "label": "pothole",
-          "score": 0.45043862670000007
+          "score": 0.9794888649122955
         },
         {
           "label": "trash",
-          "score": 0.4488274844666664
+          "score": 0.010360407216835892
         },
         {
-          "label": "water_leak",
-          "score": 0.4193854889333331
+          "label": "pothole",
+          "score": 0.0035275086435499568
         },
         {
           "label": "manhole",
-          "score": 0.41424934436666644
+          "score": 0.0030352742626317286
+        },
+        {
+          "label": "water_leak",
+          "score": 0.0018584673958170705
         },
         {
           "label": "broken_bench",
-          "score": 0.3793458788333332
+          "score": 0.0017294775688699543
         }
       ]
     },
@@ -1159,27 +1331,27 @@
       "scores": [
         {
           "label": "other",
-          "score": 0.7117317726666664
-        },
-        {
-          "label": "pothole",
-          "score": 0.5140143289666667
+          "score": 0.9675136620805553
         },
         {
           "label": "manhole",
-          "score": 0.5059087078666665
+          "score": 0.012767784350373856
         },
         {
           "label": "trash",
-          "score": 0.4800062892333332
+          "score": 0.008022829657460226
+        },
+        {
+          "label": "pothole",
+          "score": 0.005069836126513518
         },
         {
           "label": "water_leak",
-          "score": 0.47495738426666695
+          "score": 0.003928974862373371
         },
         {
           "label": "broken_bench",
-          "score": 0.4069885682
+          "score": 0.002696912922723709
         }
       ]
     }

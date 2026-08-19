@@ -136,7 +136,7 @@ async function main() {
 
   const manifest = {
     version: 2,
-    license: 'project-owned synthetic images generated for QalaFix AI',
+    license: 'project-owned synthetic images plus an attributed TACO training-only sample',
     privacy: 'prompts exclude people, faces, readable number plates, brands and watermarks',
     split: {
       training: { count: 140, percent: 70 },
@@ -145,7 +145,7 @@ async function main() {
     },
     trainingClasses: { trash: 60, manhole: 16, pothole: 16, water_leak: 16, broken_bench: 16, other: 16 },
     finalTestGroups: Object.fromEntries(Object.entries(benchmark).map(([group, files]) => [group, files.length])),
-    externalDatasetPolicy: 'Metadata and licenses were audited; no third-party photos are included in the production model.',
+    externalDatasetPolicy: '36 attributed TACO images are used only in the training split; their source URLs are recorded and they never enter validation or final-test.',
   }
   await fs.writeFile(path.join(targetRoot, 'dataset-manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`)
 

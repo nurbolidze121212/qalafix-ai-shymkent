@@ -1,6 +1,7 @@
 import type { AnalysisResult, ModelClass, Severity, TrashSubtype } from '../types/report'
 import type { MobileNet } from '@tensorflow-models/mobilenet'
 import { loadLearnedSamples, saveLearnedEmbedding } from './learningStore'
+import { applyLearnedCorrections, scoreEmbeddingWithHead, validateClassifierHead, type LocalClassifierHead } from './localClassifier'
 
 export type AnalysisStage = 'loading-model' | 'reading-image' | 'classifying' | 'preparing-result'
 
@@ -15,8 +16,9 @@ type ClassTemplate = {
 }
 
 type PrototypeFile = {
-  version: 2
+  version: 3
   embeddingSize: number
+  classifier: LocalClassifierHead
   samples: Record<ModelClass, number[][]>
   trashSubtypes: Record<TrashSubtype, number[][]>
 }
@@ -88,15 +90,21 @@ const trashTemplates: Record<TrashSubtype, Pick<ClassTemplate, 'title' | 'severi
     description: 'Обнаружено скопление бытовых или крупногабаритных отходов. Требуется уборка и вывоз.',
   },
   illegal_dump: {
-    title: 'Стихийная свалка',
+    title: 'Скопление отходов',
     severity: 'high',
-    description: 'Обнаружено несанкционированное скопление отходов. Требуется осмотр территории и вывоз мусора.',
+    description: 'Обнаружено крупное скопление отходов. Требуется осмотр территории, уборка и вывоз мусора.',
   },
   single_litter: {
     title: 'Мусор на улице',
     severity: 'low',
     description: 'На общественной территории обнаружены отдельные предметы мусора. Требуется уборка участка.',
   },
+}
+
+export function displayTrashSubtype(subtype?: TrashSubtype) {
+  if (subtype === 'single_litter') return 'scattered_litter'
+  if (subtype === 'waste_pile') return 'illegal_dump'
+  return subtype
 }
 
 export const demoScenarios: Array<{ id: ModelClass; label: string; hint: string }> = [
@@ -126,10 +134,13 @@ async function loadLocalModel(onProgress?: ProgressHandler) {
       const [tf, { load }, prototypeResponse] = await Promise.all([
         import('@tensorflow/tfjs'),
         import('@tensorflow-models/mobilenet'),
-        fetch(`${import.meta.env.BASE_URL}ai/prototypes.json`, { cache: 'force-cache' }),
+        fetch(`${import.meta.env.BASE_URL}ai/prototypes.json`, { cache: 'no-cache' }),
       ])
       if (!prototypeResponse.ok) throw new LocalModelUnavailableError('Файл локальной модели не найден')
       const prototypes = await prototypeResponse.json() as PrototypeFile
+      if (prototypes.version !== 3 || !validateClassifierHead(prototypes.classifier, prototypes.embeddingSize)) {
+        throw new LocalModelUnavailableError('Файл локальной модели повреждён или устарел')
+      }
       onProgress?.('loading-model', 45)
       await tf.ready()
       const mobilenet = await load({ version: 2, alpha: 0.5 })
@@ -216,37 +227,34 @@ export async function analyzeImage(file: File, onProgress?: ProgressHandler): Pr
   const embedding = await extractEmbedding(file, mobilenet)
   const learnedSamples = loadLearnedSamples(embedding.length)
 
-  const candidates = (Object.entries(prototypes.samples) as Array<[ModelClass, number[][]]>)
-    .filter(([, samples]) => samples.some((sample) => sample.length === embedding.length))
-    .map(([modelClass, samples]) => {
-      const baseScore = topKAverage(embedding, samples)
-      const localSamples = learnedSamples[modelClass]
-      const learnedScore = localSamples.length ? topKAverage(embedding, localSamples, 1) : 0
-      return {
-        modelClass,
-        score: learnedScore >= 0.72 ? Math.max(baseScore, Math.min(1, learnedScore + 0.025)) : baseScore,
-      }
-    })
-  if (!candidates.length) throw new LocalModelUnavailableError('Локальная модель повреждена')
+  const learnedSimilarities = Object.fromEntries(
+    Object.entries(learnedSamples).map(([modelClass, samples]) => [
+      modelClass,
+      samples.length ? topKAverage(embedding, samples, 1) : 0,
+    ]),
+  ) as Record<ModelClass, number>
+  const candidates = applyLearnedCorrections(
+    scoreEmbeddingWithHead(embedding, prototypes.classifier),
+    learnedSimilarities,
+  )
 
   candidates.sort((a, b) => b.score - a.score)
   const topCandidate = candidates[0]
   const runnerUp = candidates[1]
   const margin = Math.max(0, topCandidate.score - runnerUp.score)
-  const scoreQuality = Math.max(0, Math.min(1, (topCandidate.score - 0.5) / 0.25))
-  const separation = Math.max(0, Math.min(1, margin / 0.18))
-  const confidence = Math.round(Math.max(45, Math.min(99, 45 + scoreQuality * 20 + separation * 34)))
+  const confidence = Math.round(Math.max(45, Math.min(99, 40 + topCandidate.score * 45 + margin * 35)))
   const needsReview = topCandidate.modelClass === 'other'
     || (topCandidate.modelClass === 'trash'
-      ? topCandidate.score < 0.54
-      : topCandidate.score < 0.56 || margin < 0.05)
+      ? topCandidate.score < 0.45 || margin < 0.08
+      : topCandidate.score < 0.52 || margin < 0.12)
   onProgress?.('classifying', 100)
   onProgress?.('preparing-result', 100)
   let trashSubtype: TrashSubtype | undefined
   if (topCandidate.modelClass === 'trash') {
-    trashSubtype = (Object.entries(prototypes.trashSubtypes) as Array<[TrashSubtype, number[][]]>)
+    const detectedSubtype = (Object.entries(prototypes.trashSubtypes) as Array<[TrashSubtype, number[][]]>)
       .map(([subtype, samples]) => ({ subtype, score: topKAverage(embedding, samples, 2) }))
       .sort((a, b) => b.score - a.score)[0]?.subtype
+    trashSubtype = displayTrashSubtype(detectedSubtype)
   }
   return createResult(topCandidate.modelClass, confidence, 'local-model', trashSubtype, needsReview)
 }

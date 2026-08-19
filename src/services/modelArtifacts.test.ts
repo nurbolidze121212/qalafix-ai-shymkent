@@ -2,6 +2,7 @@ import { readdir, readFile } from 'node:fs/promises'
 import { createHash } from 'node:crypto'
 import path from 'node:path'
 import { describe, expect, it } from 'vitest'
+import { scoreEmbeddingWithHead, validateClassifierHead, type LocalClassifierHead } from './localClassifier'
 
 describe('trained local model artifacts', () => {
   async function filesUnder(directory: string): Promise<string[]> {
@@ -21,24 +22,68 @@ describe('trained local model artifacts', () => {
       sampleCounts: Record<string, number>
       samples: Record<string, number[][]>
       trashSubtypes: Record<string, number[][]>
+      classifier: LocalClassifierHead
     }
     const expected = ['trash', 'manhole', 'pothole', 'water_leak', 'broken_bench', 'other']
-    expect(model.version).toBe(2)
+    expect(model.version).toBe(3)
     expect(Object.keys(model.samples).sort()).toEqual([...expected].sort())
     expect(model.sampleCounts.trash).toBeGreaterThanOrEqual(84)
     expect(expected.filter((label) => label !== 'trash').every((label) => model.sampleCounts[label] === 16)).toBe(true)
     expect(Object.keys(model.trashSubtypes)).toHaveLength(6)
     expect(expected.every((label) => model.samples[label].every((sample) => sample.length === model.embeddingSize))).toBe(true)
+    expect(validateClassifierHead(model.classifier, model.embeddingSize)).toBe(true)
+    for (const label of expected) {
+      const scores = scoreEmbeddingWithHead(model.samples[label][0], model.classifier)
+      expect(scores[0].modelClass).toBe(label)
+      expect(scores.reduce((sum, item) => sum + item.score, 0)).toBeCloseTo(1, 6)
+    }
   })
 
   it('passes the independent gallery evaluation', async () => {
     const raw = await readFile('data/ai-evaluation.json', 'utf8')
-    const report = JSON.parse(raw) as { correct: number; total: number; trashRecall: number; cleanSpecificity: number; trashSubtypeAccuracy: number; split: Record<string, number> }
+    const report = JSON.parse(raw) as {
+      correct: number
+      total: number
+      combinedCorrect: number
+      combinedTotal: number
+      validationAccuracy: number
+      trashRecall: number
+      cleanSpecificity: number
+      trashSubtypeAccuracy: number
+      split: Record<string, number>
+      demoRegression: { correct: number; total: number }
+    }
     expect(report.total).toBe(30)
     expect(report.split).toMatchObject({ training: 176, validation: 30, finalTest: 30, externalTrainingOnly: 36 })
-    expect(report.trashRecall).toBeGreaterThanOrEqual(0.85)
-    expect(report.cleanSpecificity).toBeGreaterThanOrEqual(0.75)
-    expect(report.trashSubtypeAccuracy).toBeGreaterThanOrEqual(0.75)
+    expect(report.correct).toBe(30)
+    expect(report.combinedCorrect).toBe(34)
+    expect(report.combinedTotal).toBe(34)
+    expect(report.validationAccuracy).toBe(1)
+    expect(report.demoRegression).toEqual(expect.objectContaining({ correct: 5, total: 5 }))
+    expect(report.trashRecall).toBe(1)
+    expect(report.cleanSpecificity).toBe(1)
+    expect(report.trashSubtypeAccuracy).toBeGreaterThanOrEqual(0.9)
+  })
+
+  it('passes a frozen-model audit on unseen real-world trash photos', async () => {
+    const audit = JSON.parse(await readFile('data/ai-unseen-audit.json', 'utf8')) as {
+      modelVersion: number
+      evaluated: number
+      correct: number
+      recall: number
+      confidentCorrect: number
+      results: Array<{ tacoImageId: number }>
+    }
+    const trainingMetadata = JSON.parse(await readFile('data/ai-v2/taco-training-sample.json', 'utf8')) as {
+      images: Array<{ tacoImageId: number }>
+    }
+    const trainingIds = new Set(trainingMetadata.images.map((image) => image.tacoImageId))
+    expect(audit.modelVersion).toBe(3)
+    expect(audit.evaluated).toBe(20)
+    expect(audit.correct).toBeGreaterThanOrEqual(16)
+    expect(audit.recall).toBeGreaterThanOrEqual(0.8)
+    expect(audit.confidentCorrect).toBeGreaterThanOrEqual(16)
+    expect(audit.results.every((result) => !trainingIds.has(result.tacoImageId))).toBe(true)
   })
 
   it('keeps the 70/15/15 partitions balanced and free of duplicate images', async () => {

@@ -1,0 +1,497 @@
+{
+  "version": 1,
+  "purpose": "Frozen-model audit on unseen real-world TACO images; this command does not train or alter the model.",
+  "source": "TACO — Trash Annotations in Context",
+  "sourceRepository": "https://github.com/pedropro/TACO",
+  "modelVersion": 3,
+  "modelTrainedAt": "2026-08-19T08:55:15.209Z",
+  "auditedAt": "2026-08-19T09:00:46.311Z",
+  "selection": "Deterministic sample, disjoint from the 36 TACO training images, annotated trash area 10–75%.",
+  "requested": 20,
+  "evaluated": 20,
+  "correct": 19,
+  "recall": 0.95,
+  "confidentCorrect": 19,
+  "results": [
+    {
+      "tacoImageId": 13,
+      "sourceUrl": "https://farm66.staticflickr.com/65535/47066067064_b7ca7a114d_z.jpg",
+      "annotatedRatio": 0.2117,
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "confidence": 99,
+      "needsReview": false,
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.857849
+        },
+        {
+          "label": "other",
+          "score": 0.080203
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.025858
+        }
+      ]
+    },
+    {
+      "tacoImageId": 45,
+      "sourceUrl": "https://farm66.staticflickr.com/65535/32911404617_3bba230dbb_z.jpg",
+      "annotatedRatio": 0.3817,
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "confidence": 99,
+      "needsReview": false,
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.928152
+        },
+        {
+          "label": "other",
+          "score": 0.028759
+        },
+        {
+          "label": "manhole",
+          "score": 0.016039
+        }
+      ]
+    },
+    {
+      "tacoImageId": 73,
+      "sourceUrl": "https://farm66.staticflickr.com/65535/46939275485_13483d1194_z.jpg",
+      "annotatedRatio": 0.3713,
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "confidence": 99,
+      "needsReview": false,
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.970975
+        },
+        {
+          "label": "manhole",
+          "score": 0.010563
+        },
+        {
+          "label": "water_leak",
+          "score": 0.007802
+        }
+      ]
+    },
+    {
+      "tacoImageId": 127,
+      "sourceUrl": "https://farm66.staticflickr.com/65535/48694144626_39780e39d6_z.jpg",
+      "annotatedRatio": 0.2038,
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "confidence": 99,
+      "needsReview": false,
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.92675
+        },
+        {
+          "label": "other",
+          "score": 0.024438
+        },
+        {
+          "label": "manhole",
+          "score": 0.024221
+        }
+      ]
+    },
+    {
+      "tacoImageId": 213,
+      "sourceUrl": "https://farm66.staticflickr.com/65535/48693696003_e3d62c9515_z.jpg",
+      "annotatedRatio": 0.3608,
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "confidence": 80,
+      "needsReview": false,
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.603578
+        },
+        {
+          "label": "other",
+          "score": 0.227047
+        },
+        {
+          "label": "manhole",
+          "score": 0.085263
+        }
+      ]
+    },
+    {
+      "tacoImageId": 254,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2019/04/18/PGIfCEn9zpZbmmYq9Awjh1Dwiw6tpQSI6R5dnqKw.jpeg",
+      "annotatedRatio": 0.1427,
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "confidence": 99,
+      "needsReview": false,
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.990528
+        },
+        {
+          "label": "water_leak",
+          "score": 0.002684
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.002057
+        }
+      ]
+    },
+    {
+      "tacoImageId": 311,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2018/08/08/UC84o9pUSRAbX0zHFozppxjWHGBGLmnC0ppwq15p.jpeg",
+      "annotatedRatio": 0.3171,
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "confidence": 99,
+      "needsReview": false,
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.98924
+        },
+        {
+          "label": "water_leak",
+          "score": 0.003683
+        },
+        {
+          "label": "other",
+          "score": 0.00265
+        }
+      ]
+    },
+    {
+      "tacoImageId": 381,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2019/07/13/PL5IyeUwj7Lb58A19cO8geQkmmrCM1Or686PzgHE.jpeg",
+      "annotatedRatio": 0.1233,
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "confidence": 99,
+      "needsReview": false,
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.945501
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.019221
+        },
+        {
+          "label": "manhole",
+          "score": 0.014326
+        }
+      ]
+    },
+    {
+      "tacoImageId": 409,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2019/04/20/dRFSjMiVKv6YSR7QOHBY61qRnZXIjQsJ4pFdCnN0.jpeg",
+      "annotatedRatio": 0.2567,
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "confidence": 99,
+      "needsReview": false,
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.987258
+        },
+        {
+          "label": "water_leak",
+          "score": 0.005664
+        },
+        {
+          "label": "manhole",
+          "score": 0.002859
+        }
+      ]
+    },
+    {
+      "tacoImageId": 430,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2019/05/05/Ewt2SXShfPIwXmp9lYFPSa4nw1HjRrKK7norUyE6.jpeg",
+      "annotatedRatio": 0.1243,
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "confidence": 99,
+      "needsReview": false,
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.924971
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.047018
+        },
+        {
+          "label": "water_leak",
+          "score": 0.013721
+        }
+      ]
+    },
+    {
+      "tacoImageId": 465,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2018/09/09/CmsvujpIv5JHIESjldsPPAnlKVWEtow9KhOeVdFB.jpeg",
+      "annotatedRatio": 0.2028,
+      "expected": "trash",
+      "predicted": "manhole",
+      "correct": false,
+      "confidence": 53,
+      "needsReview": true,
+      "scores": [
+        {
+          "label": "manhole",
+          "score": 0.259004
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.209411
+        },
+        {
+          "label": "trash",
+          "score": 0.200654
+        }
+      ]
+    },
+    {
+      "tacoImageId": 483,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2018/09/20/cHh1GNgWOouPPlPkGnA6WKqGruLShzjl9jnQYqRx.jpeg",
+      "annotatedRatio": 0.2103,
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "confidence": 99,
+      "needsReview": false,
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.987097
+        },
+        {
+          "label": "other",
+          "score": 0.003586
+        },
+        {
+          "label": "water_leak",
+          "score": 0.002907
+        }
+      ]
+    },
+    {
+      "tacoImageId": 497,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2018/10/20/Cdh175paqcBxokoMZq1MHljtVC3qEFmwLqHsa6PV.jpeg",
+      "annotatedRatio": 0.2216,
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "confidence": 93,
+      "needsReview": false,
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.721784
+        },
+        {
+          "label": "water_leak",
+          "score": 0.146306
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.041944
+        }
+      ]
+    },
+    {
+      "tacoImageId": 514,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/2018/09/10/Hvs8MNxDjBRH5NvKGAMyfWPXB03VswOBFccl8iER.jpeg",
+      "annotatedRatio": 0.2776,
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "confidence": 99,
+      "needsReview": false,
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.897692
+        },
+        {
+          "label": "manhole",
+          "score": 0.037068
+        },
+        {
+          "label": "water_leak",
+          "score": 0.026047
+        }
+      ]
+    },
+    {
+      "tacoImageId": 582,
+      "sourceUrl": "https://olm-s3.s3.eu-west-1.amazonaws.com/764/J0Ors1rts9CKkJrW4gQOJvgQliw5s1ZFITm74uMw.jpeg",
+      "annotatedRatio": 0.1214,
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "confidence": 99,
+      "needsReview": false,
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.94155
+        },
+        {
+          "label": "broken_bench",
+          "score": 0.01915
+        },
+        {
+          "label": "water_leak",
+          "score": 0.015663
+        }
+      ]
+    },
+    {
+      "tacoImageId": 703,
+      "sourceUrl": "https://farm66.staticflickr.com/65535/40889047743_65bf3c51dc_z.jpg",
+      "annotatedRatio": 0.1365,
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "confidence": 99,
+      "needsReview": false,
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.888008
+        },
+        {
+          "label": "other",
+          "score": 0.040295
+        },
+        {
+          "label": "manhole",
+          "score": 0.035919
+        }
+      ]
+    },
+    {
+      "tacoImageId": 800,
+      "sourceUrl": "https://farm66.staticflickr.com/65535/47803604122_78713dfb21_z.jpg",
+      "annotatedRatio": 0.1156,
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "confidence": 99,
+      "needsReview": false,
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.891333
+        },
+        {
+          "label": "other",
+          "score": 0.066987
+        },
+        {
+          "label": "manhole",
+          "score": 0.020728
+        }
+      ]
+    },
+    {
+      "tacoImageId": 840,
+      "sourceUrl": "https://farm66.staticflickr.com/65535/47855803151_6bf8c0b666_z.jpg",
+      "annotatedRatio": 0.2878,
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "confidence": 99,
+      "needsReview": false,
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.893562
+        },
+        {
+          "label": "other",
+          "score": 0.070597
+        },
+        {
+          "label": "manhole",
+          "score": 0.012819
+        }
+      ]
+    },
+    {
+      "tacoImageId": 1029,
+      "sourceUrl": "https://farm66.staticflickr.com/65535/32912038327_a4e27c6b98_z.jpg",
+      "annotatedRatio": 0.1067,
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "confidence": 99,
+      "needsReview": false,
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.990871
+        },
+        {
+          "label": "other",
+          "score": 0.004347
+        },
+        {
+          "label": "water_leak",
+          "score": 0.001697
+        }
+      ]
+    },
+    {
+      "tacoImageId": 1215,
+      "sourceUrl": "https://farm66.staticflickr.com/65535/47066847104_956a27ecb1_z.jpg",
+      "annotatedRatio": 0.1111,
+      "expected": "trash",
+      "predicted": "trash",
+      "correct": true,
+      "confidence": 99,
+      "needsReview": false,
+      "scores": [
+        {
+          "label": "trash",
+          "score": 0.956975
+        },
+        {
+          "label": "manhole",
+          "score": 0.018425
+        },
+        {
+          "label": "water_leak",
+          "score": 0.007497
+        }
+      ]
+    }
+  ]
+}

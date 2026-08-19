@@ -1,7 +1,7 @@
 {
   "name": "qalafix-ai",
   "private": true,
-  "version": "1.2.0",
+  "version": "1.3.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,6 +11,7 @@
     "prepare:ai": "node scripts/prepare-ai-v2.mjs",
     "import:taco": "node scripts/import-taco-sample.mjs",
     "train:ai": "node scripts/train-prototypes.mjs",
+    "audit:ai": "node scripts/audit-unseen-trash.mjs",
     "preview": "vite preview",
     "android:sync": "npm run build && cap sync android",
     "android:apk": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-android.ps1"
