@@ -223,7 +223,10 @@ export default function ReportPage() {
     const duplicates = reports.filter((item) => item.category === report.category
       && Math.abs(item.latitude - report.latitude) < radius
       && Math.abs(item.longitude - report.longitude) < radius)
-    saveReports([report, ...reports])
+    if (!saveReports([report, ...reports])) {
+      setError('Не удалось сохранить обращение на устройстве. Освободите место в браузере и попробуйте ещё раз.')
+      return
+    }
     setDuplicateCount(duplicates.length)
     setReportId(id)
     setStep('success')
@@ -440,7 +443,7 @@ export default function ReportPage() {
           <p className="mt-2 text-sm text-slate-600">Номер обращения: <strong>{reportId}</strong></p>
           {duplicateCount > 0 && <p className="mx-auto mt-4 max-w-md rounded-xl bg-slate-50 p-3 text-sm text-slate-600">Рядом найдено похожих обращений: {duplicateCount}. Они помогут службе оценить масштаб проблемы.</p>}
           <div className="mt-6 grid gap-2 sm:grid-cols-3">
-            <button type="button" onClick={() => navigate('/map')} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 font-semibold text-white"><MapPin size={18} /> На карте</button>
+            <button type="button" onClick={() => navigate(`/map?category=${encodeURIComponent(category)}`)} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 font-semibold text-white"><MapPin size={18} /> На карте</button>
             <button type="button" onClick={() => navigate('/dashboard')} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-slate-300 px-4 font-semibold text-slate-700"><Check size={18} /> В панели</button>
             <button type="button" onClick={reset} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-slate-300 px-4 font-semibold text-slate-700"><ImagePlus size={18} /> Ещё обращение</button>
           </div>

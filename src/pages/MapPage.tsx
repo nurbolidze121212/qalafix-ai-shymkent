@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import { CircleMarker, MapContainer, Marker, Popup, TileLayer, Tooltip, useMap } from 'react-leaflet'
@@ -11,18 +12,9 @@ import PageHeader from '../components/layout/PageHeader'
 import { Filter, LoaderCircle, LocateFixed, MapPin } from 'lucide-react'
 import { formatLocationAccuracy, getLocationErrorMessage, requestCurrentLocation, type LocationPoint } from '../utils/geolocation'
 import { reverseGeocode } from '../services/reverseGeocoding'
+import { filterMapReports, initialMapFilter, reportMapFilters } from '../utils/reportFilters'
 
 const center = { lat: 42.316, lng: 69.605 }
-
-const filters = [
-  { id: 'trash', label: 'Мусор', category: 'Мусор' },
-  { id: 'all', label: 'Все' },
-  { id: 'high', label: 'Высокий риск', severity: 'high' as const },
-  { id: 'critical', label: 'Критический', severity: 'critical' as const },
-  { id: 'roads', label: 'Дороги', category: 'Дороги' },
-  { id: 'light', label: 'Освещение', category: 'Освещение' },
-  { id: 'water', label: 'Вода', category: 'Водоснабжение' },
-]
 
 function FixMapView() {
   const map = useMap()
@@ -54,8 +46,9 @@ function severityIcon(severity: CityReport['severity'], category: string) {
 
 export default function MapPage() {
   useDocumentTitle('QalaFix AI — Карта')
+  const [searchParams] = useSearchParams()
   const [reports] = useState<CityReport[]>(() => loadReports())
-  const [filter, setFilter] = useState('trash')
+  const [filter, setFilter] = useState(() => initialMapFilter(searchParams.get('category')))
   const [userLocation, setUserLocation] = useState<LocationPoint | null>(null)
   const [locating, setLocating] = useState(false)
   const [locationMessage, setLocationMessage] = useState('')
@@ -86,14 +79,7 @@ export default function MapPage() {
     }
   }
 
-  const filtered = useMemo(() => {
-    if (filter === 'all') return reports
-    const f = filters.find((x) => x.id === filter)
-    if (!f) return reports
-    if (f.severity) return reports.filter((r) => r.severity === f.severity)
-    if (f.category) return reports.filter((r) => r.category === f.category)
-    return reports
-  }, [reports, filter])
+  const filtered = useMemo(() => filterMapReports(reports, filter), [reports, filter])
 
   return (
     <div className="mx-auto max-w-6xl animate-fade-in">
@@ -106,7 +92,7 @@ export default function MapPage() {
       <div className="-mx-4 md:mx-0 md:rounded-[18px] md:border md:border-slate-200 md:bg-white md:p-4 md:shadow-[0_4px_18px_rgba(15,23,42,0.045)]">
         <div className="mb-3 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] md:flex-wrap md:px-0">
           <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600"><Filter size={16} /></span>
-            {filters.map((f) => (
+            {reportMapFilters.map((f) => (
               <button
                 key={f.id}
                 onClick={() => setFilter(f.id)}

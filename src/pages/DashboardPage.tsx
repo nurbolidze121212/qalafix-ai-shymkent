@@ -14,6 +14,7 @@ export default function DashboardPage() {
   const [reports, setReports] = useState<CityReport[]>(() => loadReports())
   const [tab, setTab] = useState<DashboardTab>('overview')
   const [query, setQuery] = useState('')
+  const [storageError, setStorageError] = useState('')
 
   const kpi = useMemo(() => {
     const trash = reports.filter((item) => item.category === 'Мусор')
@@ -40,8 +41,12 @@ export default function DashboardPage() {
 
   function changeStatus(id: string, status: ReportStatus) {
     const next = reports.map((item) => item.id === id ? { ...item, status } : item)
+    if (!saveReports(next)) {
+      setStorageError('Не удалось сохранить новый статус. Освободите место в браузере и повторите попытку.')
+      return
+    }
+    setStorageError('')
     setReports(next)
-    saveReports(next)
   }
 
   function exportCSV() {
@@ -78,6 +83,8 @@ export default function DashboardPage() {
           </button>
         ))}
       </nav>
+
+      {storageError && <div role="alert" className="mb-4 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm font-semibold text-red-700">{storageError}</div>}
 
       {tab === 'overview' && (
         <div className="space-y-5">

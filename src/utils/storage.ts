@@ -27,8 +27,9 @@ export function loadReports(): CityReport[] {
 export function saveReports(reports: CityReport[]) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(reports))
+    return true
   } catch {
-    // storage full or unavailable
+    return false
   }
 }
 

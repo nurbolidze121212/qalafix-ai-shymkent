@@ -1,4 +1,6 @@
-import { beforeEach, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { createDemoReport } from '../data/demoReports'
+import { analyzeDemoScenario, demoScenarios } from '../services/analyzer'
 import { generateId, loadReports, saveReports } from './storage'
 
 describe('report storage', () => {
@@ -18,8 +20,35 @@ describe('report storage', () => {
 
   it('persists status changes', () => {
     const [report] = loadReports()
-    saveReports([{ ...report, status: 'in_progress' }])
+    expect(saveReports([{ ...report, status: 'in_progress' }])).toBe(true)
     expect(loadReports()[0].status).toBe('in_progress')
+  })
+
+  it('persists the complete five-category lifecycle after a reload', () => {
+    const reports = demoScenarios.map((scenario, index) => {
+      const result = analyzeDemoScenario(scenario.id)
+      return createDemoReport({
+        id: `QF-LIFECYCLE-${index}`,
+        category: result.category,
+        title: result.title,
+        description: result.description,
+        severity: result.severity,
+        confidence: result.confidence,
+        analysisSource: result.source,
+      })
+    })
+    expect(saveReports(reports)).toBe(true)
+    expect(loadReports().map((report) => report.category)).toEqual(reports.map((report) => report.category))
+
+    const inProgress = loadReports().map((report) => ({ ...report, status: 'in_progress' as const }))
+    expect(saveReports(inProgress)).toBe(true)
+    expect(loadReports().every((report) => report.status === 'in_progress')).toBe(true)
+  })
+
+  it('reports a storage failure instead of claiming success', () => {
+    const setItem = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new DOMException('Quota exceeded') })
+    expect(saveReports([createDemoReport()])).toBe(false)
+    setItem.mockRestore()
   })
 
   it('generates collision-resistant IDs', () => {
