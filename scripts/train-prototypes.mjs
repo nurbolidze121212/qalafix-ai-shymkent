@@ -195,7 +195,7 @@ async function main() {
     embeddingSize: samples.trash[0].length, trainedAt: new Date().toISOString(),
     sampleCounts: Object.fromEntries(classes.map((label) => [label, samples[label].length])),
     training: { ...headConfig, completedEpochs: history.epoch.length, selectedUsing: 'validation-only model selection', validationAccuracy },
-    classifier, samples, trashSubtypes: subtypeSamples,
+    classifier, trashSubtypes: subtypeSamples,
   }
   await fs.writeFile(outputFile, `${JSON.stringify(payload)}\n`)
 

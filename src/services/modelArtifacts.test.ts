@@ -20,23 +20,21 @@ describe('trained local model artifacts', () => {
       version: number
       embeddingSize: number
       sampleCounts: Record<string, number>
-      samples: Record<string, number[][]>
       trashSubtypes: Record<string, number[][]>
       classifier: LocalClassifierHead
+      samples?: unknown
     }
     const expected = ['trash', 'manhole', 'pothole', 'water_leak', 'broken_bench', 'other']
     expect(model.version).toBe(3)
-    expect(Object.keys(model.samples).sort()).toEqual([...expected].sort())
     expect(model.sampleCounts.trash).toBeGreaterThanOrEqual(84)
     expect(expected.filter((label) => label !== 'trash').every((label) => model.sampleCounts[label] === 16)).toBe(true)
     expect(Object.keys(model.trashSubtypes)).toHaveLength(6)
-    expect(expected.every((label) => model.samples[label].every((sample) => sample.length === model.embeddingSize))).toBe(true)
+    expect(Object.values(model.trashSubtypes).every((samples) => samples.every((sample) => sample.length === model.embeddingSize))).toBe(true)
     expect(validateClassifierHead(model.classifier, model.embeddingSize)).toBe(true)
-    for (const label of expected) {
-      const scores = scoreEmbeddingWithHead(model.samples[label][0], model.classifier)
-      expect(scores[0].modelClass).toBe(label)
-      expect(scores.reduce((sum, item) => sum + item.score, 0)).toBeCloseTo(1, 6)
-    }
+    expect(model.classifier.classes).toEqual(expected)
+    expect(model.samples).toBeUndefined()
+    const probe = Array.from({ length: model.embeddingSize }, (_, index) => index === 0 ? 1 : 0)
+    expect(scoreEmbeddingWithHead(probe, model.classifier).reduce((sum, item) => sum + item.score, 0)).toBeCloseTo(1, 6)
   })
 
   it('passes the independent gallery evaluation', async () => {

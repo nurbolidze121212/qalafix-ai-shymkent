@@ -19,7 +19,6 @@ type PrototypeFile = {
   version: 3
   embeddingSize: number
   classifier: LocalClassifierHead
-  samples: Record<ModelClass, number[][]>
   trashSubtypes: Record<TrashSubtype, number[][]>
 }
 
