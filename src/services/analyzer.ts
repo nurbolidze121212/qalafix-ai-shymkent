@@ -219,6 +219,14 @@ function createResult(
   }
 }
 
+export function needsManualReview(modelClass: ModelClass, score: number, margin: number, confidence: number) {
+  return confidence < 70
+    || modelClass === 'other'
+    || (modelClass === 'trash'
+      ? score < 0.45 || margin < 0.08
+      : score < 0.52 || margin < 0.12)
+}
+
 export async function analyzeImage(file: File, onProgress?: ProgressHandler): Promise<AnalysisResult> {
   const { mobilenet, prototypes } = await loadLocalModel(onProgress)
   onProgress?.('reading-image', 100)
@@ -242,10 +250,7 @@ export async function analyzeImage(file: File, onProgress?: ProgressHandler): Pr
   const runnerUp = candidates[1]
   const margin = Math.max(0, topCandidate.score - runnerUp.score)
   const confidence = Math.round(Math.max(45, Math.min(99, 40 + topCandidate.score * 45 + margin * 35)))
-  const needsReview = topCandidate.modelClass === 'other'
-    || (topCandidate.modelClass === 'trash'
-      ? topCandidate.score < 0.45 || margin < 0.08
-      : topCandidate.score < 0.52 || margin < 0.12)
+  const needsReview = needsManualReview(topCandidate.modelClass, topCandidate.score, margin, confidence)
   onProgress?.('classifying', 100)
   onProgress?.('preparing-result', 100)
   let trashSubtype: TrashSubtype | undefined

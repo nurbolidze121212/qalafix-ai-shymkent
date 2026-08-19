@@ -12,6 +12,7 @@
     "import:taco": "node scripts/import-taco-sample.mjs",
     "train:ai": "node scripts/train-prototypes.mjs",
     "audit:ai": "node scripts/audit-unseen-trash.mjs",
+    "qa:e2e": "node scripts/qa-e2e.mjs",
     "preview": "vite preview",
     "android:sync": "npm run build && cap sync android",
     "android:apk": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-android.ps1"
@@ -48,6 +49,7 @@
     "eslint-plugin-react-refresh": "^0.5.4",
     "jsdom": "^30.0.1",
     "postcss": "^8.4.47",
+    "playwright-core": "^1.62.1",
     "sharp": "^0.35.3",
     "tailwindcss": "^3.4.17",
     "typescript": "~5.6.2",
